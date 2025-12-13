@@ -1,0 +1,256 @@
+import React, { useState, useEffect, useRef } from 'react';
+import { Heart, Mic, ArrowRight } from 'lucide-react';
+import AudioModal from './AudioModal';
+import styles from './EntryPage.module.css';
+
+const EntryPage = ({ onEnter }) => {
+  const [animating, setAnimating] = useState(false);
+  const [currentSide, setCurrentSide] = useState(null);
+  const [audioEnabled, setAudioEnabled] = useState(false);
+  const [showModal, setShowModal] = useState(true);
+  const [currentAudio, setCurrentAudio] = useState(null);
+  const [showArrows, setShowArrows] = useState(false);
+  const conversationTimeoutRef = useRef(null);
+  const targetSideRef = useRef(null);
+
+  // Generate random heart balloons
+  const [hearts, setHearts] = useState([]);
+
+  useEffect(() => {
+    // Create falling hearts every 2 seconds
+    const heartInterval = setInterval(() => {
+      const newHeart = {
+        id: Date.now(),
+        left: Math.random() * 100, // Random position 0-100%
+        delay: Math.random() * 2, // Random delay 0-2s
+        duration: 3 + Math.random() * 2, // Duration 3-5s
+      };
+      setHearts(prev => [...prev, newHeart]);
+
+      // Remove heart after animation completes
+      setTimeout(() => {
+        setHearts(prev => prev.filter(h => h.id !== newHeart.id));
+      }, (newHeart.duration + newHeart.delay) * 1000);
+    }, 2000);
+
+    return () => clearInterval(heartInterval);
+  }, []);
+
+  const handleEnableAudio = () => {
+    const testAudio = new Audio();
+    testAudio.src = 'data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBTGH0fPTgjMGHm7A7+OZSA0QWrLq8KVTFQlDl93wv3EiBTKAzPLXgjIGHm+/7uiZRwwQWrzq8qVTFApBl9zwv3Ah';
+    testAudio.volume = 0.01;
+    testAudio.play().catch(() => { });
+    setTimeout(() => testAudio.pause(), 100);
+
+    setAudioEnabled(true);
+    setShowModal(false);
+  };
+
+  const handleSelection = (side) => {
+    if (!audioEnabled) return;
+    stopAllAudio();
+
+    setAnimating(true);
+    setTimeout(() => {
+      onEnter(side);
+    }, 1500);
+  };
+
+  const playAudioWithFallback = (audioPath, fallbackText, pitch = 1, rate = 1.1) => {
+    return new Promise((resolve) => {
+      const audio = new Audio(audioPath);
+      audio.volume = 1;
+
+      audio.play()
+        .then(() => {
+          setCurrentAudio(audio);
+          audio.onended = () => resolve();
+        })
+        .catch(() => {
+          console.log(`Using TTS fallback for: ${audioPath}`);
+          const utterance = new SpeechSynthesisUtterance(fallbackText);
+          utterance.pitch = pitch;
+          utterance.rate = rate;
+          utterance.volume = 1;
+          utterance.onend = () => resolve();
+          window.speechSynthesis.speak(utterance);
+        });
+    });
+  };
+
+  const stopAllAudio = () => {
+    if (currentAudio) {
+      currentAudio.pause();
+      currentAudio.currentTime = 0;
+      setCurrentAudio(null);
+    }
+    window.speechSynthesis.cancel();
+    if (conversationTimeoutRef.current) {
+      clearTimeout(conversationTimeoutRef.current);
+      conversationTimeoutRef.current = null;
+    }
+  };
+
+  const handleMouseEnter = (side) => {
+    if (!audioEnabled) return;
+
+    targetSideRef.current = side;
+
+    // Trigger arrow animation on hover
+    setShowArrows(true);
+    setTimeout(() => setShowArrows(false), 2000);
+
+    if (currentSide !== side) {
+      if (currentSide === null) {
+        stopAllAudio();
+        if (side === 'groom') {
+          playAudioWithFallback(
+            '/audio/groom_hover_welcome.m4a',
+            "Hey! Are you on the groom's side? Click here to enter!",
+            0.9
+          );
+        } else {
+          playAudioWithFallback(
+            '/audio/bride_hover_welcome.m4a',
+            "Hello! Are you on the bride's side? Come on in, click here!",
+            1.3
+          );
+        }
+        setCurrentSide(side);
+      } else {
+        setCurrentSide(side);
+      }
+    }
+  };
+
+  const handleMouseLeave = (side) => {
+    if (!audioEnabled || currentSide === null) return;
+
+    const leavingSide = side;
+    const enteringSide = leavingSide === 'groom' ? 'bride' : 'groom';
+
+    stopAllAudio();
+
+    if (leavingSide === 'groom') {
+      playAudioWithFallback(
+        '/audio/groom_hover_jealous.m4a',
+        "Hey hey hey! Stay here on my side! Don't go to the bride's side!",
+        0.85,
+        1.2
+      ).then(() => {
+        conversationTimeoutRef.current = setTimeout(() => {
+          if (targetSideRef.current === enteringSide) {
+            playAudioWithFallback(
+              '/audio/bride_response_to_groom.m4a',
+              "Hey groom, be calm! They're MY side now. Welcome to the bride's side!",
+              1.3,
+              1.1
+            );
+          }
+        }, 500);
+      });
+    } else {
+      playAudioWithFallback(
+        '/audio/bride_hover_jealous.m4a',
+        "Wait wait wait! Don't leave me! Stay on the bride's side!",
+        1.35,
+        1.2
+      ).then(() => {
+        conversationTimeoutRef.current = setTimeout(() => {
+          if (targetSideRef.current === enteringSide) {
+            playAudioWithFallback(
+              '/audio/groom_response_to_bride.m4a',
+              "Ha! They came back to MY side. Welcome back!",
+              0.9,
+              1.1
+            );
+          }
+        }, 500);
+      });
+    }
+  };
+
+  useEffect(() => {
+    return () => {
+      stopAllAudio();
+    };
+  }, []);
+
+  return (
+    <>
+      {showModal && <AudioModal onEnable={handleEnableAudio} />}
+
+      <div className={`${styles.entryPage} ${animating ? styles.exiting : ''}`}>
+        {/* Falling Heart Balloons */}
+        {hearts.map(heart => (
+          <div
+            key={heart.id}
+            className={styles.fallingHeart}
+            style={{
+              left: `${heart.left}%`,
+              animationDelay: `${heart.delay}s`,
+              animationDuration: `${heart.duration}s`,
+            }}
+          >
+            <Heart fill="#D4AF37" color="#D4AF37" size={24} />
+          </div>
+        ))}
+
+        {/* Flying Arrows */}
+        {showArrows && (
+          <>
+            <div className={`${styles.flyingArrow} ${styles.arrowLeft}`}>
+              <ArrowRight size={32} color="#D4AF37" />
+            </div>
+            <div className={`${styles.flyingArrow} ${styles.arrowRight}`}>
+              <ArrowRight size={32} color="#D4AF37" style={{ transform: 'rotate(180deg)' }} />
+            </div>
+          </>
+        )}
+
+        <div
+          className={`${styles.split} ${styles.left}`}
+          onClick={() => handleSelection('groom')}
+          onMouseEnter={() => handleMouseEnter('groom')}
+          onMouseLeave={() => handleMouseLeave('groom')}
+        >
+          <div className={styles.content}>
+            <div className={styles.character}>
+              <img src="/groom-character.png" alt="Groom" />
+            </div>
+            <h2>Groom's Side</h2>
+            <p>Sakthivel Prabakaran</p>
+            <div className={styles.icon}><Mic size={48} /></div>
+            <p className={styles.clickHint}>Click to Enter</p>
+          </div>
+        </div>
+
+        <div className={styles.divider}>
+          <div className={styles.heartWrapper}>
+            <Heart fill="#fff" color="#D4AF37" size={64} />
+          </div>
+        </div>
+
+        <div
+          className={`${styles.split} ${styles.right}`}
+          onClick={() => handleSelection('bride')}
+          onMouseEnter={() => handleMouseEnter('bride')}
+          onMouseLeave={() => handleMouseLeave('bride')}
+        >
+          <div className={styles.content}>
+            <div className={styles.character}>
+              <img src="/bride-character.png" alt="Bride" />
+            </div>
+            <h2>Bride's Side</h2>
+            <p>Vivitha</p>
+            <div className={styles.icon}><Mic size={48} /></div>
+            <p className={styles.clickHint}>Click to Enter</p>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default EntryPage;

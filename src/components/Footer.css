@@ -1,0 +1,17 @@
+.footer {
+    background-color: #222;
+    color: #aaa;
+    padding: 40px 0;
+    text-align: center;
+}
+
+.hashtag {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    color: var(--secondary-color);
+    margin-bottom: 10px;
+}
+
+.copyright {
+    font-size: 0.9rem;
+}

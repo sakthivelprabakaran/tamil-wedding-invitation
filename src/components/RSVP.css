@@ -1,0 +1,63 @@
+.rsvp {
+    background-color: var(--primary-color);
+    color: var(--white);
+    padding: 80px 0;
+}
+
+.rsvp .section-title {
+    color: var(--secondary-color);
+}
+
+.rsvp-form-container {
+    max-width: 600px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 40px;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--secondary-color);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    font-family: var(--font-body);
+}
+
+.submit-btn {
+    width: 100%;
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    border: none;
+}
+
+.submit-btn:hover {
+    background-color: var(--white);
+}
+
+.success-message {
+    text-align: center;
+    padding: 40px;
+}
+
+.success-message h3 {
+    font-family: var(--font-heading);
+    font-size: 3rem;
+    color: var(--secondary-color);
+}

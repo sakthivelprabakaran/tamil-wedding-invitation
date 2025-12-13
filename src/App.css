@@ -1,0 +1,17 @@
+.fade-in {
+  animation: fadeInContent 2s ease-in-out;
+}
+
+@keyframes fadeInContent {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.section-padding {
+  padding: 80px 0;
+}

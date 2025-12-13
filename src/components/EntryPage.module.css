@@ -1,0 +1,301 @@
+.entryPage {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    z-index: 1000;
+    overflow: hidden;
+    transition: transform 1.5s cubic-bezier(0.86, 0, 0.07, 1);
+}
+
+.entryPage.exiting {
+    transform: translateY(-100%);
+}
+
+.split {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.5s ease;
+    cursor: pointer;
+    position: relative;
+}
+
+.split:hover {
+    flex: 1.2;
+}
+
+.left {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+}
+
+.right {
+    background-color: var(--bg-color);
+    color: var(--primary-color);
+}
+
+.content {
+    text-align: center;
+    transform: translateY(0);
+    transition: transform 0.5s ease;
+    position: relative;
+}
+
+.split:hover .content {
+    transform: scale(1.1);
+}
+
+.character {
+    width: 250px;
+    height: 250px;
+    margin: 0 auto 20px;
+    animation: float 3s ease-in-out infinite;
+    background: none;
+}
+
+.character img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.3));
+    background: transparent;
+}
+
+.split:hover .character {
+    animation: wave 0.6s ease-in-out;
+}
+
+.content h2 {
+    font-family: var(--font-heading);
+    font-size: 4rem;
+    margin-bottom: 0.5rem;
+    color: inherit;
+    /* Force inherit color from parent .left or .right */
+}
+
+.content p {
+    font-family: var(--font-body);
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+    color: inherit;
+    /* Force inherit color from parent .left or .right */
+}
+
+.icon {
+    margin: 20px 0;
+    opacity: 0.7;
+    animation: pulse 2s infinite;
+}
+
+.clickHint {
+    font-size: 0.9rem;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+}
+
+.split:hover .clickHint {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.divider {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+}
+
+.heartWrapper {
+    background: #fff;
+    border-radius: 50%;
+    padding: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    animation: beat 3s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.7;
+    }
+
+    50% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 0.7;
+    }
+}
+
+@keyframes beat {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes wave {
+
+    0%,
+    100% {
+        transform: rotate(0deg);
+    }
+
+    25% {
+        transform: rotate(-10deg);
+    }
+
+    75% {
+        transform: rotate(10deg);
+    }
+}
+
+/* Falling Hearts Animation */
+.fallingHeart {
+    position: absolute;
+    top: -50px;
+    animation: fall linear forwards;
+    z-index: 100;
+    opacity: 0.8;
+}
+
+@keyframes fall {
+    0% {
+        top: -50px;
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+    }
+
+    50% {
+        opacity: 0.9;
+    }
+
+    90% {
+        opacity: 0.5;
+        transform: scale(1.2) rotate(180deg);
+    }
+
+    100% {
+        top: 100vh;
+        opacity: 0;
+        transform: scale(0.5) rotate(360deg);
+    }
+}
+
+/* Flying Arrows Animation */
+.flyingArrow {
+    position: absolute;
+    top: 50%;
+    animation: flyAcross 2s ease-in-out;
+    z-index: 50;
+    opacity: 0;
+}
+
+.arrowLeft {
+    left: 10%;
+    animation-name: flyRight;
+}
+
+.arrowRight {
+    right: 10%;
+    animation-name: flyLeft;
+}
+
+@keyframes flyRight {
+    0% {
+        left: 10%;
+        opacity: 0;
+        transform: translateX(0) scale(0.5);
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    80% {
+        opacity: 1;
+    }
+
+    100% {
+        left: 90%;
+        opacity: 0;
+        transform: translateX(0) scale(1.5);
+    }
+}
+
+@keyframes flyLeft {
+    0% {
+        right: 10%;
+        opacity: 0;
+        transform: translateX(0) scale(0.5) rotate(180deg);
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    80% {
+        opacity: 1;
+    }
+
+    100% {
+        right: 90%;
+        opacity: 0;
+        transform: translateX(0) scale(1.5) rotate(180deg);
+    }
+}
+
+@media (max-width: 768px) {
+    .entryPage {
+        flex-direction: column;
+    }
+
+    .content h2 {
+        font-size: 3rem;
+    }
+}
+
+.audioHint {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: var(--secondary-color);
+    padding: 10px 20px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 1001;
+    animation: pulse 2s infinite;
+    font-size: 0.9rem;
+    font-family: var(--font-body);
+}
