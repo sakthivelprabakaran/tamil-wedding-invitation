@@ -12,6 +12,7 @@ const EntryPage = ({ onEnter }) => {
   const [showArrows, setShowArrows] = useState(false);
   const conversationTimeoutRef = useRef(null);
   const targetSideRef = useRef(null);
+  const currentSideRef = useRef(null); // Track current side synchronously
 
   // Generate random heart balloons
   const [hearts, setHearts] = useState([]);
@@ -101,74 +102,76 @@ const EntryPage = ({ onEnter }) => {
     setShowArrows(true);
     setTimeout(() => setShowArrows(false), 2000);
 
-    if (currentSide !== side) {
-      if (currentSide === null) {
-        stopAllAudio();
-        if (side === 'groom') {
-          playAudioWithFallback(
-            '/audio/groom_hover_welcome.m4a',
-            "Hey! Are you on the groom's side? Click here to enter!",
-            0.9
-          );
-        } else {
-          playAudioWithFallback(
-            '/audio/bride_hover_welcome.m4a',
-            "Hello! Are you on the bride's side? Come on in, click here!",
-            1.3
-          );
-        }
-        setCurrentSide(side);
+    const previousSide = currentSideRef.current;
+
+    // Update ref immediately
+    currentSideRef.current = side;
+    setCurrentSide(side);
+
+    if (previousSide === null) {
+      // First hover ever - play welcome
+      stopAllAudio();
+      if (side === 'groom') {
+        playAudioWithFallback(
+          '/audio/groom_hover_welcome.m4a',
+          "Hey! Are you on the groom's side? Click here to enter!",
+          0.9
+        );
       } else {
-        setCurrentSide(side);
+        playAudioWithFallback(
+          '/audio/bride_hover_welcome.m4a',
+          "Hello! Are you on the bride's side? Come on in, click here!",
+          1.3
+        );
+      }
+    } else if (previousSide !== side) {
+      // Switching sides - play jealous from previous side + response from new side
+      stopAllAudio();
+
+      if (previousSide === 'groom') {
+        // Coming from groom to bride
+        playAudioWithFallback(
+          '/audio/groom_hover_jealous.m4a',
+          "Hey hey hey! Stay here on my side! Don't go to the bride's side!",
+          0.85,
+          1.2
+        ).then(() => {
+          conversationTimeoutRef.current = setTimeout(() => {
+            if (currentSideRef.current === 'bride') {
+              playAudioWithFallback(
+                '/audio/bride_response_to_groom.m4a',
+                "Hey groom, be calm! They're MY side now. Welcome to the bride's side!",
+                1.3,
+                1.1
+              );
+            }
+          }, 500);
+        });
+      } else {
+        // Coming from bride to groom
+        playAudioWithFallback(
+          '/audio/bride_hover_jealous.m4a',
+          "Wait wait wait! Don't leave me! Stay on the bride's side!",
+          1.35,
+          1.2
+        ).then(() => {
+          conversationTimeoutRef.current = setTimeout(() => {
+            if (currentSideRef.current === 'groom') {
+              playAudioWithFallback(
+                '/audio/groom_response_to_bride.m4a',
+                "Ha! They came back to MY side. Welcome back!",
+                0.9,
+                1.1
+              );
+            }
+          }, 500);
+        });
       }
     }
   };
 
-  const handleMouseLeave = (side) => {
-    if (!audioEnabled || currentSide === null) return;
-
-    const leavingSide = side;
-    const enteringSide = leavingSide === 'groom' ? 'bride' : 'groom';
-
-    stopAllAudio();
-
-    if (leavingSide === 'groom') {
-      playAudioWithFallback(
-        '/audio/groom_hover_jealous.m4a',
-        "Hey hey hey! Stay here on my side! Don't go to the bride's side!",
-        0.85,
-        1.2
-      ).then(() => {
-        conversationTimeoutRef.current = setTimeout(() => {
-          if (targetSideRef.current === enteringSide) {
-            playAudioWithFallback(
-              '/audio/bride_response_to_groom.m4a',
-              "Hey groom, be calm! They're MY side now. Welcome to the bride's side!",
-              1.3,
-              1.1
-            );
-          }
-        }, 500);
-      });
-    } else {
-      playAudioWithFallback(
-        '/audio/bride_hover_jealous.m4a',
-        "Wait wait wait! Don't leave me! Stay on the bride's side!",
-        1.35,
-        1.2
-      ).then(() => {
-        conversationTimeoutRef.current = setTimeout(() => {
-          if (targetSideRef.current === enteringSide) {
-            playAudioWithFallback(
-              '/audio/groom_response_to_bride.m4a',
-              "Ha! They came back to MY side. Welcome back!",
-              0.9,
-              1.1
-            );
-          }
-        }, 500);
-      });
-    }
+  const handleMouseLeave = (side, event) => {
+    // No longer needed - all logic moved to mouseEnter
   };
 
   useEffect(() => {
@@ -213,7 +216,7 @@ const EntryPage = ({ onEnter }) => {
           className={`${styles.split} ${styles.left}`}
           onClick={() => handleSelection('groom')}
           onMouseEnter={() => handleMouseEnter('groom')}
-          onMouseLeave={() => handleMouseLeave('groom')}
+          onMouseLeave={(e) => handleMouseLeave('groom', e)}
         >
           <div className={styles.content}>
             <div className={styles.character}>
@@ -236,7 +239,7 @@ const EntryPage = ({ onEnter }) => {
           className={`${styles.split} ${styles.right}`}
           onClick={() => handleSelection('bride')}
           onMouseEnter={() => handleMouseEnter('bride')}
-          onMouseLeave={() => handleMouseLeave('bride')}
+          onMouseLeave={(e) => handleMouseLeave('bride', e)}
         >
           <div className={styles.content}>
             <div className={styles.character}>
