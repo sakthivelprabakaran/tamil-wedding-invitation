@@ -14,6 +14,37 @@
     transform: translateY(-100%);
 }
 
+/* --- Premium High-End Illustration Images --- */
+
+.mandapamBorderImg {
+    width: 100%;
+    height: auto;
+    max-height: 25vh;
+    object-fit: cover;
+    object-position: top;
+    mix-blend-mode: screen;
+    opacity: 0.95;
+    pointer-events: none;
+}
+
+.mandalaImg {
+    width: 65px;
+    height: 65px;
+    mix-blend-mode: screen;
+    opacity: 0.95;
+    animation: pulse 3s infinite alternate ease-in-out;
+}
+
+@keyframes pulse {
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.1);
+    }
+}
+
 .split {
     flex: 1;
     display: flex;

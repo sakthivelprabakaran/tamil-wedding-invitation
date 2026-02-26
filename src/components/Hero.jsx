@@ -1,24 +1,22 @@
 import React from 'react';
 import TempleSVG from './SVGs/TempleSVG';
-import ThoranamSVG from './SVGs/ThoranamSVG';
 import KalasamSVG from './SVGs/KalasamSVG';
-import KuthuVilakkuSVG from './SVGs/KuthuVilakkuSVG';
 import './Hero.css';
 
 const Hero = () => {
   return (
     <section className="hero">
       <div className="hero-thoranam">
-        <ThoranamSVG />
+        <img src="/gold_mandapam_border.png" alt="Mandapam Border" className="mandapam-border-img" />
       </div>
       <div className="hero-temple-bg">
         <TempleSVG isDark={true} />
       </div>
       <div className="vilakku-left">
-        <KuthuVilakkuSVG className="vilakku-svg" />
+        <img src="/gold_kuthu_vilakku.png" alt="Vilakku" className="vilakku-img" />
       </div>
       <div className="vilakku-right">
-        <KuthuVilakkuSVG className="vilakku-svg" />
+        <img src="/gold_kuthu_vilakku.png" alt="Vilakku" className="vilakku-img" />
       </div>
       <div className="hero-content">
         <p className="sub-heading">We are getting married!</p>

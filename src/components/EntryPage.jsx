@@ -2,9 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Mic, ArrowRight } from 'lucide-react';
 import AudioModal from './AudioModal';
 import { publicUrl } from '../utils/publicUrl';
-import ThoranamSVG from './SVGs/ThoranamSVG';
 import BananaTreeSVG from './SVGs/BananaTreeSVG';
-import KalasamSVG from './SVGs/KalasamSVG';
 import styles from './EntryPage.module.css';
 
 const EntryPage = ({ onEnter }) => {
@@ -256,7 +254,7 @@ const EntryPage = ({ onEnter }) => {
 
         {/* Top Decoration */}
         <div className={styles.thoranamContainer}>
-          <ThoranamSVG />
+          <img src="/gold_mandapam_border.png" alt="Mandapam Border" className={styles.mandapamBorderImg} />
         </div>
 
         {/* Flying Arrows */}
@@ -302,7 +300,7 @@ const EntryPage = ({ onEnter }) => {
 
         <div className={styles.divider}>
           <div className={styles.dividerOrnament}>
-            <KalasamSVG />
+            <img src="/gold_mandala.png" alt="Mandala" className={styles.mandalaImg} />
           </div>
         </div>
 
