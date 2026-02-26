@@ -33,7 +33,7 @@ const WeddingDetails = () => {
         <div className="events-grid">
           <EventCard
             title="Reception"
-            date="[Date Placeholder]"
+            date="March 25th, 2026"
             time="6:30 PM Onwards"
             location="[Venue Name, City]"
             description="Join us for an evening of music, dinner, and celebration."
@@ -41,7 +41,7 @@ const WeddingDetails = () => {
 
           <EventCard
             title="Muhurtham"
-            date="[Date Placeholder]"
+            date="March 25th, 2026"
             time="9:00 AM - 10:30 AM"
             location="[Venue Name, City]"
             description="The auspicious moment where we tie the knot."

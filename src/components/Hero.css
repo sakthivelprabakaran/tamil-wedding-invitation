@@ -115,7 +115,55 @@
 }
 
 @media (max-width: 768px) {
+    .hero {
+        height: auto;
+        min-height: 100vh;
+        padding: 40px 20px;
+    }
+
+    .sub-heading {
+        font-size: 1rem;
+        letter-spacing: 1.5px;
+    }
+
     .couple-name {
-        font-size: 3.5rem;
+        font-size: 3rem;
+        margin: 15px 0;
+    }
+
+    .heart-icon {
+        margin: 15px 0;
+    }
+
+    .date {
+        font-size: 1.2rem;
+        margin-top: 20px;
+    }
+
+    .date-placeholder {
+        font-size: 1.5rem;
+    }
+
+    .scroll-indicator {
+        font-size: 1.5rem;
+        bottom: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .couple-name {
+        font-size: 2.5rem;
+    }
+
+    .sub-heading {
+        font-size: 0.9rem;
+    }
+
+    .date {
+        font-size: 1rem;
+    }
+
+    .date-placeholder {
+        font-size: 1.3rem;
     }
 }

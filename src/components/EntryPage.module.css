@@ -275,10 +275,152 @@
 @media (max-width: 768px) {
     .entryPage {
         flex-direction: column;
+        height: 100vh;
+        min-height: 100vh;
+        overflow: hidden;
+    }
+
+    .split {
+        width: 100%;
+        height: 50vh;
+        min-height: 50vh;
+        max-height: 50vh;
+        padding: 15px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+
+    .content {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .divider {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 70px;
+        height: 70px;
+        z-index: 100;
+        background: transparent;
+    }
+
+    .heartWrapper {
+        width: 55px;
+        height: 55px;
+        background: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .character {
+        width: 120px;
+        height: 120px;
+        margin: 0 auto 8px;
     }
 
     .content h2 {
-        font-size: 3rem;
+        font-size: 1.75rem;
+        margin: 5px 0;
+    }
+
+    .content p {
+        font-size: 1rem;
+        margin: 3px 0;
+    }
+
+    .icon {
+        width: 32px;
+        height: 32px;
+        margin: 5px 0;
+    }
+
+    .icon svg {
+        width: 24px;
+        height: 24px;
+    }
+
+    .clickHint {
+        font-size: 0.85rem;
+        margin: 5px 0 0 0;
+    }
+
+    /* Optimize animations for mobile */
+    .character {
+        animation: float 4s ease-in-out infinite;
+    }
+
+    /* Reduce heart balloon frequency on mobile */
+    .fallingHeart {
+        animation-duration: 4s;
+    }
+
+    /* Tap-friendly sizing */
+    .split {
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+    }
+}
+
+@media (max-width: 480px) {
+    .split {
+        padding: 10px 15px;
+    }
+
+    .character {
+        width: 100px;
+        height: 100px;
+        margin: 0 auto 5px;
+    }
+
+    .content h2 {
+        font-size: 1.5rem;
+        margin: 3px 0;
+    }
+
+    .content p {
+        font-size: 0.9rem;
+        margin: 2px 0;
+    }
+
+    .icon {
+        width: 28px;
+        height: 28px;
+        margin: 3px 0;
+    }
+
+    .icon svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .clickHint {
+        font-size: 0.8rem;
+    }
+
+    .divider {
+        width: 60px;
+        height: 60px;
+    }
+
+    .heartWrapper {
+        width: 45px;
+        height: 45px;
+    }
+
+    /* Smaller flying arrows */
+    .flyingArrow {
+        transform: scale(0.6);
     }
 }
 

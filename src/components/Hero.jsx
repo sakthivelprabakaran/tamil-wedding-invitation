@@ -13,7 +13,7 @@ const Hero = () => {
         </div>
         <h1 className="couple-name">Vivitha</h1>
         <p className="date">Save the Date</p>
-        <p className="date-placeholder">[Date to be Decided]</p>
+        <p className="date-placeholder">March 25th, 2026</p>
         <div className="scroll-indicator">
           <span>&#8595;</span>
         </div>

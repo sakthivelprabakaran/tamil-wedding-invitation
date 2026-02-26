@@ -71,3 +71,40 @@
         opacity: 1;
     }
 }
+
+@media (max-width: 768px) {
+    .gallery {
+        padding: 60px 20px;
+    }
+
+    .galleryGrid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 15px;
+    }
+
+    .placeholderPhoto {
+        height: 250px;
+        font-size: 1.2rem;
+    }
+
+    .audioIndicator {
+        padding: 8px;
+        bottom: 10px;
+        right: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .gallery {
+        padding: 40px 15px;
+    }
+
+    .galleryGrid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .placeholderPhoto {
+        height: 200px;
+    }
+}

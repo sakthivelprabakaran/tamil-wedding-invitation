@@ -62,3 +62,41 @@
     background-color: var(--primary-color);
     color: var(--white);
 }
+
+@media (max-width: 768px) {
+    .wedding-details {
+        padding: 60px 20px;
+    }
+
+    .events-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        margin-top: 30px;
+    }
+
+    .event-card {
+        padding: 25px;
+    }
+
+    .event-card h3 {
+        font-size: 2rem;
+    }
+
+    .info-item {
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .wedding-details {
+        padding: 40px 15px;
+    }
+
+    .event-card h3 {
+        font-size: 1.75rem;
+    }
+
+    .event-card {
+        padding: 20px;
+    }
+}

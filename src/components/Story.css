@@ -50,7 +50,54 @@
 }
 
 @media (max-width: 768px) {
+    .story {
+        padding: 60px 20px;
+    }
+
+    .story-content {
+        gap: 30px;
+    }
+
+    .story-image {
+        min-width: 250px;
+    }
+
+    .placeholder-img {
+        height: 280px;
+        font-size: 1.2rem;
+    }
+
     .story-text {
         text-align: center;
+    }
+
+    .story-text h3 {
+        font-size: 2rem;
+    }
+
+    .story-text p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .story {
+        padding: 40px 15px;
+    }
+
+    .story-content {
+        gap: 20px;
+    }
+
+    .placeholder-img {
+        height: 220px;
+    }
+
+    .story-text h3 {
+        font-size: 1.75rem;
+    }
+
+    .story-text p {
+        font-size: 0.95rem;
     }
 }

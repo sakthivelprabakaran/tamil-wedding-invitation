@@ -48,6 +48,12 @@ const EntryPage = ({ onEnter }) => {
     setShowModal(false);
   };
 
+  // Detect if user is on mobile
+  const isMobile = () => {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+      || window.innerWidth <= 768;
+  };
+
   const handleSelection = (side) => {
     if (!audioEnabled) return;
     stopAllAudio();
@@ -174,6 +180,83 @@ const EntryPage = ({ onEnter }) => {
     // No longer needed - all logic moved to mouseEnter
   };
 
+  // Mobile touch handler - plays audio immediately on tap
+  const handleTouch = (side) => {
+    if (!audioEnabled || !isMobile()) return;
+
+    const previousSide = currentSideRef.current;
+
+    // If tapping the same side again - navigate
+    if (previousSide === side) {
+      handleSelection(side);
+      return;
+    }
+
+    // Update immediately
+    currentSideRef.current = side;
+    setCurrentSide(side);
+
+    // Trigger audio immediately on tap
+    if (previousSide === null) {
+      // First tap - welcome
+      stopAllAudio();
+      if (side === 'groom') {
+        playAudioWithFallback(
+          '/audio/groom_hover_welcome.m4a',
+          "Hey! Are you on the groom's side? Click here to enter!",
+          0.9
+        );
+      } else {
+        playAudioWithFallback(
+          '/audio/bride_hover_welcome.m4a',
+          "Hello! Are you on the bride's side? Come on in, click here!",
+          1.3
+        );
+      }
+    } else if (previousSide !== side) {
+      // Switching - play conversation
+      stopAllAudio();
+
+      if (previousSide === 'groom') {
+        playAudioWithFallback(
+          '/audio/groom_hover_jealous.m4a',
+          "Hey hey hey! Stay here on my side! Don't go to the bride's side!",
+          0.85,
+          1.2
+        ).then(() => {
+          conversationTimeoutRef.current = setTimeout(() => {
+            if (currentSideRef.current === 'bride') {
+              playAudioWithFallback(
+                '/audio/bride_response_to_groom.m4a',
+                "Hey groom, be calm! They're MY side now. Welcome to the bride's side!",
+                1.3,
+                1.1
+              );
+            }
+          }, 500);
+        });
+      } else {
+        playAudioWithFallback(
+          '/audio/bride_hover_jealous.m4a',
+          "Wait wait wait! Don't leave me! Stay on the bride's side!",
+          1.35,
+          1.2
+        ).then(() => {
+          conversationTimeoutRef.current = setTimeout(() => {
+            if (currentSideRef.current === 'groom') {
+              playAudioWithFallback(
+                '/audio/groom_response_to_bride.m4a',
+                "Ha! They came back to MY side. Welcome back!",
+                0.9,
+                1.1
+              );
+            }
+          }, 500);
+        });
+      }
+    }
+  };
+
   useEffect(() => {
     return () => {
       stopAllAudio();
@@ -214,9 +297,16 @@ const EntryPage = ({ onEnter }) => {
 
         <div
           className={`${styles.split} ${styles.left}`}
-          onClick={() => handleSelection('groom')}
-          onMouseEnter={() => handleMouseEnter('groom')}
-          onMouseLeave={(e) => handleMouseLeave('groom', e)}
+          onClick={(e) => {
+            if (isMobile() && !animating) {
+              e.preventDefault();
+              handleTouch('groom');
+            } else if (!isMobile()) {
+              handleSelection('groom');
+            }
+          }}
+          onMouseEnter={() => !isMobile() && handleMouseEnter('groom')}
+          onMouseLeave={(e) => !isMobile() && handleMouseLeave('groom', e)}
         >
           <div className={styles.content}>
             <div className={styles.character}>
@@ -225,7 +315,9 @@ const EntryPage = ({ onEnter }) => {
             <h2>Groom's Side</h2>
             <p>Sakthivel Prabakaran</p>
             <div className={styles.icon}><Mic size={48} /></div>
-            <p className={styles.clickHint}>Click to Enter</p>
+            <p className={styles.clickHint}>
+              {isMobile() ? 'Tap to Hear & Enter' : 'Click to Enter'}
+            </p>
           </div>
         </div>
 
@@ -237,9 +329,16 @@ const EntryPage = ({ onEnter }) => {
 
         <div
           className={`${styles.split} ${styles.right}`}
-          onClick={() => handleSelection('bride')}
-          onMouseEnter={() => handleMouseEnter('bride')}
-          onMouseLeave={(e) => handleMouseLeave('bride', e)}
+          onClick={(e) => {
+            if (isMobile() && !animating) {
+              e.preventDefault();
+              handleTouch('bride');
+            } else if (!isMobile()) {
+              handleSelection('bride');
+            }
+          }}
+          onMouseEnter={() => !isMobile() && handleMouseEnter('bride')}
+          onMouseLeave={(e) => !isMobile() && handleMouseLeave('bride', e)}
         >
           <div className={styles.content}>
             <div className={styles.character}>
@@ -248,7 +347,9 @@ const EntryPage = ({ onEnter }) => {
             <h2>Bride's Side</h2>
             <p>Vivitha</p>
             <div className={styles.icon}><Mic size={48} /></div>
-            <p className={styles.clickHint}>Click to Enter</p>
+            <p className={styles.clickHint}>
+              {isMobile() ? 'Tap to Hear & Enter' : 'Click to Enter'}
+            </p>
           </div>
         </div>
       </div>

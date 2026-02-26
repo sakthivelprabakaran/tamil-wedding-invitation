@@ -15,3 +15,31 @@
 .copyright {
     font-size: 0.9rem;
 }
+
+@media (max-width: 768px) {
+    .footer {
+        padding: 30px 20px;
+    }
+
+    .hashtag {
+        font-size: 1.5rem;
+    }
+
+    .copyright {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .footer {
+        padding: 25px 15px;
+    }
+
+    .hashtag {
+        font-size: 1.3rem;
+    }
+
+    .copyright {
+        font-size: 0.8rem;
+    }
+}
