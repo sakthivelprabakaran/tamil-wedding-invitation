@@ -72,13 +72,13 @@ h4,
 h5,
 h6 {
   font-family: var(--font-heading);
-  /* Default Metallic Gold Gradient for headings */
-  background: linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%);
+  /* Champagne Gold Gradient for headings */
+  background: linear-gradient(135deg, #B58D3D 0%, #F8E7B0 25%, #E6C27A 50%, #FDF8E4 75%, #9C752B 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   background-size: 200% auto;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
 }
 
 a {
@@ -101,8 +101,8 @@ ul {
   text-align: center;
   font-size: 3.5rem;
   margin-bottom: 2.5rem;
-  /* Extends the base h2 gradient setup */
-  background: linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%);
+  /* Extends the base champagne gradient setup */
+  background: linear-gradient(135deg, #B58D3D 0%, #F8E7B0 25%, #E6C27A 50%, #FDF8E4 75%, #9C752B 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -111,8 +111,9 @@ ul {
 /* --- Premium Utilities --- */
 
 .gold-gradient-text {
-  background: linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%);
+  background: linear-gradient(135deg, #B58D3D 0%, #F8E7B0 25%, #E6C27A 50%, #FDF8E4 75%, #9C752B 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   background-size: 200% auto;
 }
@@ -129,7 +130,7 @@ ul {
 .btn {
   display: inline-block;
   padding: 12px 35px;
-  background: linear-gradient(135deg, rgba(191, 149, 63, 0.1) 0%, rgba(170, 119, 28, 0.2) 100%);
+  background: linear-gradient(135deg, rgba(230, 194, 122, 0.1) 0%, rgba(181, 141, 61, 0.2) 100%);
   backdrop-filter: blur(5px);
   color: var(--tertiary-color);
   border: 1px solid var(--secondary-color);
@@ -140,12 +141,12 @@ ul {
   letter-spacing: 1px;
   cursor: pointer;
   transition: all 0.4s ease;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 .btn:hover {
-  background: linear-gradient(135deg, #BF953F 0%, #AA771C 100%);
-  color: var(--bg-dark);
-  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+  background: linear-gradient(135deg, #E6C27A 0%, #9C752B 100%);
+  color: var(--primary-color);
+  box-shadow: 0 6px 20px rgba(230, 194, 122, 0.5);
   transform: translateY(-2px);
 }

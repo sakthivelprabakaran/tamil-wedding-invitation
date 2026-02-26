@@ -30,18 +30,18 @@
 }
 
 .left {
-    background: rgba(42, 8, 8, 0.65);
+    background: rgba(12, 43, 32, 0.65);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    border-right: 1px solid rgba(212, 175, 55, 0.2);
+    border-right: 1px solid rgba(230, 194, 122, 0.2);
     color: var(--secondary-color);
 }
 
 .right {
-    background: rgba(200, 180, 150, 0.15);
+    background: rgba(249, 246, 240, 0.15);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    border-left: 1px solid rgba(212, 175, 55, 0.2);
+    border-left: 1px solid rgba(230, 194, 122, 0.2);
     color: var(--secondary-color);
 }
 
