@@ -1,4 +1,5 @@
 import React from 'react';
+import DiyaSVG from './SVGs/DiyaSVG';
 import './Story.css';
 
 const Story = () => {
@@ -11,6 +12,9 @@ const Story = () => {
             <div className="placeholder-img">Couple Photo</div>
           </div>
           <div className="story-text">
+            <div className="story-ornament">
+              <DiyaSVG style={{ width: '40px', height: '60px' }} />
+            </div>
             <h3>How We Met</h3>
             <p>
               Destiny brought us together. What started as a simple conversation blossomed into a beautiful friendship and now, a lifelong promise. We are excited to embark on this new chapter of our lives together, surrounded by our loved ones.

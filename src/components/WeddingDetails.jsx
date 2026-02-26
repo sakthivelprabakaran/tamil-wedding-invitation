@@ -1,5 +1,7 @@
 import React from 'react';
 import { MapPin, Calendar, Clock } from 'lucide-react';
+import JallikattuSVG from './SVGs/JallikattuSVG';
+import KalasamSVG from './SVGs/KalasamSVG';
 import './WeddingDetails.css';
 
 const EventCard = ({ title, date, time, location, description }) => (
@@ -27,8 +29,14 @@ const EventCard = ({ title, date, time, location, description }) => (
 const WeddingDetails = () => {
   return (
     <section className="wedding-details section-padding" id="events">
+      <div className="wedding-jallikattu-bg">
+        <JallikattuSVG opacity={0.05} fill="var(--secondary-color)" />
+      </div>
       <div className="container">
-        <h2 className="section-title">Wedding Events</h2>
+        <div className="wedding-ornament">
+          <KalasamSVG style={{ width: '50px', height: '70px' }} />
+        </div>
+        <h2 className="section-title text-light">Wedding Events</h2>
 
         <div className="events-grid">
           <EventCard

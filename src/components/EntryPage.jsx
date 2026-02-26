@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Heart, Mic, ArrowRight } from 'lucide-react';
+import { Mic, ArrowRight } from 'lucide-react';
 import AudioModal from './AudioModal';
 import { publicUrl } from '../utils/publicUrl';
+import ThoranamSVG from './SVGs/ThoranamSVG';
+import BananaTreeSVG from './SVGs/BananaTreeSVG';
+import KalasamSVG from './SVGs/KalasamSVG';
 import styles from './EntryPage.module.css';
-
 
 const EntryPage = ({ onEnter }) => {
   const [animating, setAnimating] = useState(false);
@@ -16,27 +18,8 @@ const EntryPage = ({ onEnter }) => {
   const targetSideRef = useRef(null);
   const currentSideRef = useRef(null); // Track current side synchronously
 
-  // Generate random heart balloons
-  const [hearts, setHearts] = useState([]);
-
+  // Empty useEffect for now since we removed falling hearts
   useEffect(() => {
-    // Create falling hearts every 2 seconds
-    const heartInterval = setInterval(() => {
-      const newHeart = {
-        id: Date.now(),
-        left: Math.random() * 100, // Random position 0-100%
-        delay: Math.random() * 2, // Random delay 0-2s
-        duration: 3 + Math.random() * 2, // Duration 3-5s
-      };
-      setHearts(prev => [...prev, newHeart]);
-
-      // Remove heart after animation completes
-      setTimeout(() => {
-        setHearts(prev => prev.filter(h => h.id !== newHeart.id));
-      }, (newHeart.duration + newHeart.delay) * 1000);
-    }, 2000);
-
-    return () => clearInterval(heartInterval);
   }, []);
 
   const handleEnableAudio = () => {
@@ -270,20 +253,11 @@ const EntryPage = ({ onEnter }) => {
       {showModal && <AudioModal onEnable={handleEnableAudio} />}
 
       <div className={`${styles.entryPage} ${animating ? styles.exiting : ''}`}>
-        {/* Falling Heart Balloons */}
-        {hearts.map(heart => (
-          <div
-            key={heart.id}
-            className={styles.fallingHeart}
-            style={{
-              left: `${heart.left}%`,
-              animationDelay: `${heart.delay}s`,
-              animationDuration: `${heart.duration}s`,
-            }}
-          >
-            <Heart fill="#D4AF37" color="#D4AF37" size={24} />
-          </div>
-        ))}
+
+        {/* Top Decoration */}
+        <div className={styles.thoranamContainer}>
+          <ThoranamSVG />
+        </div>
 
         {/* Flying Arrows */}
         {showArrows && (
@@ -310,6 +284,9 @@ const EntryPage = ({ onEnter }) => {
           onMouseEnter={() => !isMobile() && handleMouseEnter('groom')}
           onMouseLeave={(e) => !isMobile() && handleMouseLeave('groom', e)}
         >
+          <div className={styles.bananaTreeLeft}>
+            <BananaTreeSVG />
+          </div>
           <div className={styles.content}>
             <div className={styles.character}>
               <img src={publicUrl('/groom-character.png')} alt="Groom" />
@@ -324,8 +301,8 @@ const EntryPage = ({ onEnter }) => {
         </div>
 
         <div className={styles.divider}>
-          <div className={styles.heartWrapper}>
-            <Heart fill="#fff" color="#D4AF37" size={64} />
+          <div className={styles.dividerOrnament}>
+            <KalasamSVG />
           </div>
         </div>
 
@@ -342,6 +319,9 @@ const EntryPage = ({ onEnter }) => {
           onMouseEnter={() => !isMobile() && handleMouseEnter('bride')}
           onMouseLeave={(e) => !isMobile() && handleMouseLeave('bride', e)}
         >
+          <div className={styles.bananaTreeRight}>
+            <BananaTreeSVG isFlipped />
+          </div>
           <div className={styles.content}>
             <div className={styles.character}>
               <img src={publicUrl('/bride-character.png')} alt="Bride" />

@@ -1,15 +1,23 @@
 import React from 'react';
-import { Heart } from 'lucide-react';
+import TempleSVG from './SVGs/TempleSVG';
+import ThoranamSVG from './SVGs/ThoranamSVG';
+import KalasamSVG from './SVGs/KalasamSVG';
 import './Hero.css';
 
 const Hero = () => {
   return (
     <section className="hero">
+      <div className="hero-thoranam">
+        <ThoranamSVG />
+      </div>
+      <div className="hero-temple-bg">
+        <TempleSVG isDark={true} />
+      </div>
       <div className="hero-content">
         <p className="sub-heading">We are getting married!</p>
         <h1 className="couple-name">Sakthivel Prabakaran</h1>
-        <div className="heart-icon">
-          <Heart fill="#D4AF37" color="#D4AF37" size={48} />
+        <div className="hero-ornament">
+          <KalasamSVG style={{ width: '40px', height: '60px' }} />
         </div>
         <h1 className="couple-name">Vivitha</h1>
         <p className="date">Save the Date</p>

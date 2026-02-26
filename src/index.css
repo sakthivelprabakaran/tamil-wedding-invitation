@@ -1,14 +1,31 @@
-@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Great+Vibes&family=Lora:ital,wght@0,400;0,600;1,400&display=swap');
 
 :root {
-  --primary-color: #800020; /* Deep Maroon */
-  --secondary-color: #D4AF37; /* Gold */
-  --bg-color: #FFFDD0; /* Cream */
-  --text-color: #333333;
+  /* Core Traditional Colors */
+  --primary-color: #7B1113;
+  /* Deep Maroon / Kumkum */
+  --secondary-color: #D4AF37;
+  /* Shimmering Gold */
+  --tertiary-color: #FFC30B;
+  /* Turmeric Yellow */
+  --quaternary-color: #E7C27D;
+  /* Sandalwood */
+
+  /* Backgrounds & Text */
+  --bg-color: #FFFDF7;
+  /* Warm Off-White / Sandalwood tint */
+  --bg-dark: #2A0808;
+  /* Very Dark Maroon for contrasting sections */
+  --text-color: #3A2E2B;
+  /* Dark Warm Grey/Brown */
+  --text-light: #FDFBF7;
+  /* For dark backgrounds */
   --white: #FFFFFF;
-  
-  --font-heading: 'Great Vibes', cursive;
-  --font-body: 'Poppins', sans-serif;
+
+  /* Typography */
+  --font-heading: 'Cinzel', serif;
+  --font-script: 'Great Vibes', cursive;
+  --font-body: 'Lora', serif;
 }
 
 * {
@@ -25,7 +42,12 @@ body {
   overflow-x: hidden;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-heading);
   color: var(--primary-color);
 }
