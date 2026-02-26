@@ -41,12 +41,64 @@
     background: var(--glass-bg);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    padding: 30px;
     border-radius: 12px;
     box-shadow: var(--glass-shadow);
     text-align: center;
     border: 1px solid var(--glass-border);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    /* important for corners & pillars */
+    padding: 0;
+    /* padding moved to content */
+    overflow: hidden;
+}
+
+.event-card-content {
+    padding: 50px 70px;
+    position: relative;
+    z-index: 5;
+}
+
+.kolam-corner {
+    opacity: 0.15;
+}
+
+.kolam-corner.tl {
+    top: 10px;
+    left: 10px;
+}
+
+.kolam-corner.tr {
+    top: 10px;
+    right: 10px;
+}
+
+.kolam-corner.bl {
+    bottom: 10px;
+    left: 10px;
+}
+
+.kolam-corner.br {
+    bottom: 10px;
+    right: 10px;
+}
+
+.yali-left,
+.yali-right {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 80%;
+    opacity: 0.2;
+}
+
+.yali-left {
+    left: 20px;
+}
+
+.yali-right {
+    right: 20px;
 }
 
 .event-card:hover {

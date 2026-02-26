@@ -2,6 +2,7 @@ import React from 'react';
 import TempleSVG from './SVGs/TempleSVG';
 import ThoranamSVG from './SVGs/ThoranamSVG';
 import KalasamSVG from './SVGs/KalasamSVG';
+import KuthuVilakkuSVG from './SVGs/KuthuVilakkuSVG';
 import './Hero.css';
 
 const Hero = () => {
@@ -12,6 +13,12 @@ const Hero = () => {
       </div>
       <div className="hero-temple-bg">
         <TempleSVG isDark={true} />
+      </div>
+      <div className="vilakku-left">
+        <KuthuVilakkuSVG className="vilakku-svg" />
+      </div>
+      <div className="vilakku-right">
+        <KuthuVilakkuSVG className="vilakku-svg" />
       </div>
       <div className="hero-content">
         <p className="sub-heading">We are getting married!</p>

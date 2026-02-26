@@ -4,6 +4,19 @@
     position: relative;
 }
 
+.nadaswaram-divider {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    bottom: -60px;
+    /* Overlap between sections */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 20;
+    width: 200px;
+    opacity: 0.8;
+}
+
 .story .container {
     background: var(--glass-bg);
     backdrop-filter: blur(12px);

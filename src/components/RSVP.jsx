@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ThamboolamSVG from './SVGs/ThamboolamSVG';
 import './RSVP.css';
 
 const RSVP = () => {
@@ -21,6 +22,9 @@ const RSVP = () => {
       <div className="container">
         <h2 className="section-title">RSVP</h2>
         <div className="rsvp-form-container">
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '30px' }}>
+            <ThamboolamSVG />
+          </div>
           {!submitted ? (
             <form onSubmit={handleSubmit} className="rsvp-form">
               <div className="form-group">

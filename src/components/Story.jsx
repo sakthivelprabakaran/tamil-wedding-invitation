@@ -1,5 +1,6 @@
 import React from 'react';
 import DiyaSVG from './SVGs/DiyaSVG';
+import NadaswaramThavilSVG from './SVGs/NadaswaramThavilSVG';
 import './Story.css';
 
 const Story = () => {
@@ -24,6 +25,10 @@ const Story = () => {
             </p>
           </div>
         </div>
+      </div>
+
+      <div className="nadaswaram-divider">
+        <NadaswaramThavilSVG />
       </div>
     </section>
   );

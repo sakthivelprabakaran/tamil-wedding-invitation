@@ -8,8 +8,12 @@ const ThoranamSVG = ({ className = '', style = {}, fill = 'var(--quaternary-colo
         style={{ display: 'block', width: '100%', ...style }}
         preserveAspectRatio="none"
     >
-        {/* Main String */}
+        {/* Main Mango Leaf String */}
         <path d="M 0 20 Q 300 60 600 60 T 1200 20" fill="none" stroke={fill} strokeWidth="4" />
+
+        {/* Malli Poo (Jasmine) Intertwining String */}
+        <path d="M 0 30 Q 300 70 600 70 T 1200 30" fill="none" stroke="#FFFFFF" strokeWidth="6" strokeDasharray="8 6" opacity="0.9" filter="drop-shadow(0 2px 4px rgba(0,0,0,0.3))" />
+        <path d="M 0 30 Q 300 70 600 70 T 1200 30" fill="none" stroke="#FDFBF7" strokeWidth="3" strokeDasharray="8 6" opacity="0.9" />
 
         {/* Generate multiple mango leaves hanging from the string */}
         {Array.from({ length: 15 }).map((_, i) => {
@@ -32,7 +36,10 @@ const ThoranamSVG = ({ className = '', style = {}, fill = 'var(--quaternary-colo
 
                     {/* Small Marigold flower alternating between leaves */}
                     {i < 14 && (
-                        <circle cx="39" cy="-5" r="8" fill="var(--secondary-color)" />
+                        <g transform="translate(39, -5)">
+                            <circle cx="0" cy="0" r="10" fill="var(--tertiary-color)" />
+                            <circle cx="0" cy="0" r="6" fill="#D4AF37" />
+                        </g>
                     )}
                 </g>
             );
