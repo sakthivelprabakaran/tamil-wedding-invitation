@@ -5,8 +5,7 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    background-color: var(--primary-color);
-    background-image: radial-gradient(circle at 50% 50%, #900025 0%, #800020 100%);
+    background-color: transparent;
     color: var(--secondary-color);
     position: relative;
     overflow: hidden;
@@ -38,6 +37,13 @@
 .hero-content {
     z-index: 10;
     animation: fadeIn 2s ease-in-out;
+    padding: 60px 80px;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    background: rgba(40, 5, 5, 0.45);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    box-shadow: var(--glass-shadow);
 }
 
 .sub-heading {
@@ -133,6 +139,12 @@
         height: auto;
         min-height: 100vh;
         padding: 40px 20px;
+    }
+
+    .hero-content {
+        padding: 40px 30px;
+        width: 90%;
+        max-width: 500px;
     }
 
     .sub-heading {

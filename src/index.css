@@ -1,26 +1,32 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Great+Vibes&family=Lora:ital,wght@0,400;0,600;1,400&display=swap');
 
 :root {
-  /* Core Traditional Colors */
-  --primary-color: #7B1113;
-  /* Deep Maroon / Kumkum */
+  /* Premium Traditional Colors */
+  --primary-color: #5A0A0A;
+  /* Deeper, richer Maroon / Ruby */
   --secondary-color: #D4AF37;
-  /* Shimmering Gold */
+  /* Base Gold */
   --tertiary-color: #FFC30B;
-  /* Turmeric Yellow */
+  /* Bright Gold */
   --quaternary-color: #E7C27D;
-  /* Sandalwood */
+  /* Soft Gold / Sandalwood */
 
   /* Backgrounds & Text */
   --bg-color: #FFFDF7;
-  /* Warm Off-White / Sandalwood tint */
-  --bg-dark: #2A0808;
-  /* Very Dark Maroon for contrasting sections */
-  --text-color: #3A2E2B;
-  /* Dark Warm Grey/Brown */
-  --text-light: #FDFBF7;
-  /* For dark backgrounds */
+  --bg-dark: #3A0505;
+  /* Even darker maroon for contrast */
+  --text-color: #FDFBF7;
+  /* Default to light text for dark premium backgrounds */
+  --text-dark: #3A2E2B;
+  /* For any light cards */
   --white: #FFFFFF;
+
+  /* Glassmorphism Variables */
+  --glass-bg: rgba(60, 5, 5, 0.45);
+  /* Dark maroon tinted glass */
+  --glass-border: rgba(212, 175, 55, 0.35);
+  /* Subtle gold glass border */
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
 
   /* Typography */
   --font-heading: 'Cinzel', serif;
@@ -36,10 +42,27 @@
 
 body {
   font-family: var(--font-body);
-  background-color: var(--bg-color);
+  background-color: var(--primary-color);
+  background-image: url('/silk-texture.png');
+  background-size: repeat;
+  /* It's a seamless texture */
+  background-attachment: fixed;
   color: var(--text-color);
   line-height: 1.6;
   overflow-x: hidden;
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(circle at center, transparent 0%, rgba(20, 0, 0, 0.6) 100%);
+  pointer-events: none;
+  z-index: -1;
 }
 
 h1,
@@ -49,7 +72,13 @@ h4,
 h5,
 h6 {
   font-family: var(--font-heading);
-  color: var(--primary-color);
+  /* Default Metallic Gold Gradient for headings */
+  background: linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% auto;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
 a {
@@ -70,24 +99,53 @@ ul {
 
 .section-title {
   text-align: center;
-  font-size: 3rem;
-  margin-bottom: 2rem;
-  color: var(--primary-color);
+  font-size: 3.5rem;
+  margin-bottom: 2.5rem;
+  /* Extends the base h2 gradient setup */
+  background: linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* --- Premium Utilities --- */
+
+.gold-gradient-text {
+  background: linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% auto;
+}
+
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: 12px;
 }
 
 .btn {
   display: inline-block;
-  padding: 10px 30px;
-  background-color: var(--primary-color);
-  color: var(--secondary-color);
-  border: 2px solid var(--secondary-color);
-  border-radius: 5px;
+  padding: 12px 35px;
+  background: linear-gradient(135deg, rgba(191, 149, 63, 0.1) 0%, rgba(170, 119, 28, 0.2) 100%);
+  backdrop-filter: blur(5px);
+  color: var(--tertiary-color);
+  border: 1px solid var(--secondary-color);
+  border-radius: 6px;
+  font-family: var(--font-heading);
   font-weight: 600;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.4s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .btn:hover {
-  background-color: var(--secondary-color);
-  color: var(--primary-color);
+  background: linear-gradient(135deg, #BF953F 0%, #AA771C 100%);
+  color: var(--bg-dark);
+  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+  transform: translateY(-2px);
 }
