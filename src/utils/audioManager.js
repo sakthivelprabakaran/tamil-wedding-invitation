@@ -1,3 +1,5 @@
+import { publicUrl } from './publicUrl';
+
 class AudioManager {
     constructor() {
         this.currentAudio = null;
@@ -22,7 +24,7 @@ class AudioManager {
 
     playWelcome(side) {
         // Placeholder paths - user needs to replace these
-        const src = side === 'groom' ? '/audio/groom_welcome.mp3' : '/audio/bride_welcome.mp3';
+        const src = side === 'groom' ? publicUrl('/audio/groom_welcome.mp3') : publicUrl('/audio/bride_welcome.mp3');
         this.play(src);
     }
 

@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Heart, Mic, ArrowRight } from 'lucide-react';
 import AudioModal from './AudioModal';
+import { publicUrl } from '../utils/publicUrl';
 import styles from './EntryPage.module.css';
+
 
 const EntryPage = ({ onEnter }) => {
   const [animating, setAnimating] = useState(false);
@@ -119,13 +121,13 @@ const EntryPage = ({ onEnter }) => {
       stopAllAudio();
       if (side === 'groom') {
         playAudioWithFallback(
-          '/audio/groom_hover_welcome.m4a',
+          publicUrl('/audio/groom_hover_welcome.m4a'),
           "Hey! Are you on the groom's side? Click here to enter!",
           0.9
         );
       } else {
         playAudioWithFallback(
-          '/audio/bride_hover_welcome.m4a',
+          publicUrl('/audio/bride_hover_welcome.m4a'),
           "Hello! Are you on the bride's side? Come on in, click here!",
           1.3
         );
@@ -137,7 +139,7 @@ const EntryPage = ({ onEnter }) => {
       if (previousSide === 'groom') {
         // Coming from groom to bride
         playAudioWithFallback(
-          '/audio/groom_hover_jealous.m4a',
+          publicUrl('/audio/groom_hover_jealous.m4a'),
           "Hey hey hey! Stay here on my side! Don't go to the bride's side!",
           0.85,
           1.2
@@ -145,7 +147,7 @@ const EntryPage = ({ onEnter }) => {
           conversationTimeoutRef.current = setTimeout(() => {
             if (currentSideRef.current === 'bride') {
               playAudioWithFallback(
-                '/audio/bride_response_to_groom.m4a',
+                publicUrl('/audio/bride_response_to_groom.m4a'),
                 "Hey groom, be calm! They're MY side now. Welcome to the bride's side!",
                 1.3,
                 1.1
@@ -156,7 +158,7 @@ const EntryPage = ({ onEnter }) => {
       } else {
         // Coming from bride to groom
         playAudioWithFallback(
-          '/audio/bride_hover_jealous.m4a',
+          publicUrl('/audio/bride_hover_jealous.m4a'),
           "Wait wait wait! Don't leave me! Stay on the bride's side!",
           1.35,
           1.2
@@ -164,7 +166,7 @@ const EntryPage = ({ onEnter }) => {
           conversationTimeoutRef.current = setTimeout(() => {
             if (currentSideRef.current === 'groom') {
               playAudioWithFallback(
-                '/audio/groom_response_to_bride.m4a',
+                publicUrl('/audio/groom_response_to_bride.m4a'),
                 "Ha! They came back to MY side. Welcome back!",
                 0.9,
                 1.1
@@ -202,13 +204,13 @@ const EntryPage = ({ onEnter }) => {
       stopAllAudio();
       if (side === 'groom') {
         playAudioWithFallback(
-          '/audio/groom_hover_welcome.m4a',
+          publicUrl('/audio/groom_hover_welcome.m4a'),
           "Hey! Are you on the groom's side? Click here to enter!",
           0.9
         );
       } else {
         playAudioWithFallback(
-          '/audio/bride_hover_welcome.m4a',
+          publicUrl('/audio/bride_hover_welcome.m4a'),
           "Hello! Are you on the bride's side? Come on in, click here!",
           1.3
         );
@@ -219,7 +221,7 @@ const EntryPage = ({ onEnter }) => {
 
       if (previousSide === 'groom') {
         playAudioWithFallback(
-          '/audio/groom_hover_jealous.m4a',
+          publicUrl('/audio/groom_hover_jealous.m4a'),
           "Hey hey hey! Stay here on my side! Don't go to the bride's side!",
           0.85,
           1.2
@@ -227,7 +229,7 @@ const EntryPage = ({ onEnter }) => {
           conversationTimeoutRef.current = setTimeout(() => {
             if (currentSideRef.current === 'bride') {
               playAudioWithFallback(
-                '/audio/bride_response_to_groom.m4a',
+                publicUrl('/audio/bride_response_to_groom.m4a'),
                 "Hey groom, be calm! They're MY side now. Welcome to the bride's side!",
                 1.3,
                 1.1
@@ -237,7 +239,7 @@ const EntryPage = ({ onEnter }) => {
         });
       } else {
         playAudioWithFallback(
-          '/audio/bride_hover_jealous.m4a',
+          publicUrl('/audio/bride_hover_jealous.m4a'),
           "Wait wait wait! Don't leave me! Stay on the bride's side!",
           1.35,
           1.2
@@ -245,7 +247,7 @@ const EntryPage = ({ onEnter }) => {
           conversationTimeoutRef.current = setTimeout(() => {
             if (currentSideRef.current === 'groom') {
               playAudioWithFallback(
-                '/audio/groom_response_to_bride.m4a',
+                publicUrl('/audio/groom_response_to_bride.m4a'),
                 "Ha! They came back to MY side. Welcome back!",
                 0.9,
                 1.1
@@ -310,7 +312,7 @@ const EntryPage = ({ onEnter }) => {
         >
           <div className={styles.content}>
             <div className={styles.character}>
-              <img src="/groom-character.png" alt="Groom" />
+              <img src={publicUrl('/groom-character.png')} alt="Groom" />
             </div>
             <h2>Groom's Side</h2>
             <p>Sakthivel Prabakaran</p>
@@ -342,7 +344,7 @@ const EntryPage = ({ onEnter }) => {
         >
           <div className={styles.content}>
             <div className={styles.character}>
-              <img src="/bride-character.png" alt="Bride" />
+              <img src={publicUrl('/bride-character.png')} alt="Bride" />
             </div>
             <h2>Bride's Side</h2>
             <p>Vivitha</p>

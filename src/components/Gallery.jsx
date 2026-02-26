@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
 import { Volume2 } from 'lucide-react';
 import { audioManager } from '../utils/audioManager';
+import { publicUrl } from '../utils/publicUrl';
 import styles from './Gallery.module.css';
 
 const Gallery = () => {
   const [playingIndex, setPlayingIndex] = useState(null);
 
   const photos = [
-    { id: 1, caption: 'Photo 1', audioSrc: '/audio/photo1.mp3' },
-    { id: 2, caption: 'Photo 2', audioSrc: '/audio/photo2.mp3' },
-    { id: 3, caption: 'Photo 3', audioSrc: '/audio/photo3.mp3' },
-    { id: 4, caption: 'Photo 4', audioSrc: '/audio/photo4.mp3' },
-    { id: 5, caption: 'Photo 5', audioSrc: '/audio/photo5.mp3' },
-    { id: 6, caption: 'Photo 6', audioSrc: '/audio/photo6.mp3' },
+    { id: 1, caption: 'Photo 1', audioSrc: publicUrl('/audio/photo1.mp3') },
+    { id: 2, caption: 'Photo 2', audioSrc: publicUrl('/audio/photo2.mp3') },
+    { id: 3, caption: 'Photo 3', audioSrc: publicUrl('/audio/photo3.mp3') },
+    { id: 4, caption: 'Photo 4', audioSrc: publicUrl('/audio/photo4.mp3') },
+    { id: 5, caption: 'Photo 5', audioSrc: publicUrl('/audio/photo5.mp3') },
+    { id: 6, caption: 'Photo 6', audioSrc: publicUrl('/audio/photo6.mp3') },
   ];
 
   const handlePhotoHover = (index, audioSrc) => {
