@@ -116,27 +116,27 @@ ul {
 @keyframes sparkleFloat {
   0% {
     opacity: 0;
-    transform: translateY(0) scale(0);
+    transform: translate(0, 0) scale(0);
   }
 
   10% {
     opacity: 1;
-    transform: translateY(-5px) scale(1);
+    transform: translate(5px, -15px) scale(1);
   }
 
   50% {
     opacity: 0.8;
-    transform: translateY(-30px) scale(1.2);
+    transform: translate(-8px, -60px) scale(1.3);
   }
 
   90% {
     opacity: 0.3;
-    transform: translateY(-60px) scale(0.5);
+    transform: translate(8px, -110px) scale(0.5);
   }
 
   100% {
     opacity: 0;
-    transform: translateY(-70px) scale(0);
+    transform: translate(0, -130px) scale(0);
   }
 }
 

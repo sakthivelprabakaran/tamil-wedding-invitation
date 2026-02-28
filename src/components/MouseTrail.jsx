@@ -1,81 +1,110 @@
 import React, { useEffect, useRef, useCallback } from 'react';
 
 /**
- * MouseTrail — drops "S", "&", "V" letters wherever the mouse moves.
- * Letters float upward and fade out. Throttled so it doesn't spam too many elements.
+ * MouseTrail — spawns an animated SVG heart containing "SV" wherever
+ * the cursor moves. Each heart floats upward, pulses once, then fades out.
  */
-const LETTERS = ['S', '&', 'V'];
-const COLORS = ['#FFD700', '#F2C94C', '#E8A838', '#D4957A'];
+const GOLD_COLORS = ['#FFD700', '#F2C94C', '#E8A838', '#FF9ECB'];
 
 const MouseTrail = () => {
     const containerRef = useRef(null);
-    const indexRef = useRef(0);
     const lastTimeRef = useRef(0);
 
-    const spawnLetter = useCallback((x, y) => {
+    const spawnHeart = useCallback((x, y) => {
         const container = containerRef.current;
         if (!container) return;
 
-        const letter = document.createElement('span');
-        const char = LETTERS[indexRef.current % LETTERS.length];
-        const color = COLORS[Math.floor(Math.random() * COLORS.length)];
-        const size = 12 + Math.random() * 14;
-        const drift = (Math.random() - 0.5) * 40;
+        const size = 28 + Math.random() * 18;         // 28–46px
+        const color = GOLD_COLORS[Math.floor(Math.random() * GOLD_COLORS.length)];
+        const drift = (Math.random() - 0.5) * 50;       // horizontal wobble
+        const rotStart = (Math.random() - 0.5) * 20;    // slight initial tilt
 
-        indexRef.current++;
+        // Build SVG heart wrapper
+        const wrapper = document.createElement('div');
+        wrapper.style.cssText = `
+            position: fixed;
+            left: ${x}px;
+            top: ${y}px;
+            width: ${size}px;
+            height: ${size}px;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%) scale(0.4) rotate(${rotStart}deg);
+            opacity: 0;
+            transition: transform 1.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                        opacity  1.6s ease-out;
+            will-change: transform, opacity;
+        `;
 
-        letter.textContent = char;
-        letter.style.cssText = `
-      position: fixed;
-      left: ${x}px;
-      top: ${y}px;
-      pointer-events: none;
-      font-family: 'Great Vibes', cursive;
-      font-size: ${size}px;
-      color: ${color};
-      text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
-      z-index: 9999;
-      opacity: 1;
-      transform: translate(-50%, -50%) scale(1);
-      transition: all 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-      will-change: transform, opacity;
-    `;
+        // Inline SVG heart with "SV" text
+        wrapper.innerHTML = `
+            <svg viewBox="0 0 100 90" xmlns="http://www.w3.org/2000/svg"
+                 width="${size}" height="${size * 0.9}">
+                <defs>
+                    <filter id="hglow" x="-30%" y="-30%" width="160%" height="160%">
+                        <feGaussianBlur stdDeviation="3" result="blur" />
+                        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                    </filter>
+                </defs>
+                <!-- Heart shape -->
+                <path d="M50,85 C50,85 5,55 5,28 A20,20,0,0,1,50,25 A20,20,0,0,1,95,28 C95,55 50,85 50,85 Z"
+                    fill="${color}"
+                    opacity="0.9"
+                    filter="url(#hglow)"
+                />
+                <!-- Inner lighter heart for depth -->
+                <path d="M50,72 C50,72 15,50 15,31 A14,14,0,0,1,50,29 A14,14,0,0,1,85,31 C85,50 50,72 50,72 Z"
+                    fill="white"
+                    opacity="0.18"
+                />
+                <!-- "SV" text centered in heart -->
+                <text x="50" y="54"
+                    font-family="'Cormorant Garamond','Times New Roman',serif"
+                    font-size="28"
+                    font-weight="700"
+                    font-style="italic"
+                    fill="white"
+                    text-anchor="middle"
+                    dominant-baseline="middle"
+                    opacity="0.95"
+                    letter-spacing="2"
+                >SV</text>
+            </svg>
+        `;
 
-        container.appendChild(letter);
+        container.appendChild(wrapper);
 
-        // Trigger animation on next frame
+        // Trigger float-up + scale + fade animation
         requestAnimationFrame(() => {
-            letter.style.opacity = '0';
-            letter.style.transform = `translate(calc(-50% + ${drift}px), calc(-50% - 80px)) scale(0.3) rotate(${(Math.random() - 0.5) * 30}deg)`;
+            wrapper.style.opacity = '0.95';
+            wrapper.style.transform = `translate(calc(-50% + ${drift}px), calc(-50% - 90px)) scale(1) rotate(${rotStart + (Math.random() - 0.5) * 15}deg)`;
         });
 
-        // Remove element after animation
+        // Fade out near end
         setTimeout(() => {
-            if (letter.parentNode === container) {
-                container.removeChild(letter);
-            }
-        }, 1600);
+            wrapper.style.opacity = '0';
+        }, 1200);
+
+        // Remove after animation completes
+        setTimeout(() => {
+            if (wrapper.parentNode === container) container.removeChild(wrapper);
+        }, 1650);
     }, []);
 
     useEffect(() => {
         const handleMouseMove = (e) => {
             const now = Date.now();
-            // Throttle: spawn a letter every 100ms
-            if (now - lastTimeRef.current < 100) return;
+            if (now - lastTimeRef.current < 120) return;  // throttle to ~8fps
             lastTimeRef.current = now;
-
-            spawnLetter(e.clientX, e.clientY);
+            spawnHeart(e.clientX, e.clientY);
         };
 
         const handleTouchMove = (e) => {
             const now = Date.now();
-            if (now - lastTimeRef.current < 120) return;
+            if (now - lastTimeRef.current < 150) return;
             lastTimeRef.current = now;
-
             const touch = e.touches[0];
-            if (touch) {
-                spawnLetter(touch.clientX, touch.clientY);
-            }
+            if (touch) spawnHeart(touch.clientX, touch.clientY);
         };
 
         window.addEventListener('mousemove', handleMouseMove);
@@ -85,9 +114,15 @@ const MouseTrail = () => {
             window.removeEventListener('mousemove', handleMouseMove);
             window.removeEventListener('touchmove', handleTouchMove);
         };
-    }, [spawnLetter]);
+    }, [spawnHeart]);
 
-    return <div ref={containerRef} aria-hidden="true" style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 9999 }} />;
+    return (
+        <div
+            ref={containerRef}
+            aria-hidden="true"
+            style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 9999 }}
+        />
+    );
 };
 
 export default MouseTrail;
