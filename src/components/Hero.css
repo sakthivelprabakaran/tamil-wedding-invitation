@@ -283,7 +283,7 @@
     .hero-banana-left,
     .hero-banana-right {
         width: 220px;
-        opacity: 0.25;
+        opacity: 0.55;
     }
 
     .hero-banana-left {
@@ -324,7 +324,7 @@
     .hero-banana-left,
     .hero-banana-right {
         width: 200px;
-        opacity: 0.2;
+        opacity: 0.5;
     }
 
     .hero-banana-left {
