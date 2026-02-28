@@ -276,26 +276,33 @@
         font-size: 1.2rem;
     }
 
-    .hero-ornament-line {
-        width: 40px;
+    /* Make Thoranam larger by rendering it wider and centering it */
+    .hero-thoranam {
+        width: 180%;
+        left: -40%;
     }
 
     .hero-banana-left,
     .hero-banana-right {
-        width: 220px;
-        opacity: 0.55;
+        width: auto;
+        height: 100%;
+        opacity: 0.45;
     }
 
     .hero-banana-left {
-        left: -80px;
+        left: 0;
+        transform: translateX(-60%);
     }
 
     .hero-banana-right {
-        right: -80px;
+        right: 0;
+        transform: translateX(60%);
     }
 
     .hero-temple {
-        width: 80%;
+        width: 140%;
+        bottom: 0;
+        opacity: 0.15;
     }
 }
 
@@ -323,21 +330,24 @@
 
     .hero-banana-left,
     .hero-banana-right {
-        width: 200px;
-        opacity: 0.5;
+        width: auto;
+        height: 100%;
+        opacity: 0.4;
     }
 
     .hero-banana-left {
-        left: -90px;
+        left: 0;
+        transform: translateX(-65%);
     }
 
     .hero-banana-right {
-        right: -90px;
+        right: 0;
+        transform: translateX(65%);
     }
 
     .hero-temple {
-        width: 95%;
+        width: 160%;
         opacity: 0.12;
-        bottom: 5px;
+        bottom: 0;
     }
 }

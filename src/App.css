@@ -25,3 +25,18 @@
   position: relative;
   z-index: 2;
 }
+
+/* === RESPONSIVE UTILITIES === */
+@media (max-width: 768px) {
+  .vertical-garland-left {
+    transform: scale(0.6) translateX(-5px);
+    transform-origin: top left;
+    height: 170vh !important;
+  }
+
+  .vertical-garland-right {
+    transform: scale(0.6) translateX(5px);
+    transform-origin: top right;
+    height: 170vh !important;
+  }
+}
