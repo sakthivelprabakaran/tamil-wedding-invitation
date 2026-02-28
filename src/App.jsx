@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import EntryPage from './components/EntryPage';
+import MouseTrail from './components/MouseTrail';
+
 import { audioManager } from './utils/audioManager';
 import Hero from './components/Hero';
 import WeddingDetails from './components/WeddingDetails';
@@ -21,6 +23,8 @@ function App() {
 
   return (
     <div className="App">
+      <MouseTrail />
+
       {!entered && <EntryPage onEnter={handleEnter} />}
 
       {entered && (

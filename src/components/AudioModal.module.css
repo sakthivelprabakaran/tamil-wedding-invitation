@@ -4,74 +4,93 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(10px);
+    background: radial-gradient(ellipse at center, rgba(107, 29, 29, 0.95) 0%, rgba(45, 10, 10, 0.98) 100%);
+    backdrop-filter: blur(20px);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 2000;
-    animation: fadeIn 0.5s ease-in-out;
+    animation: fadeIn 0.6s ease;
 }
 
 .modalContent {
-    background: linear-gradient(135deg, var(--primary-color) 0%, #900025 100%);
-    padding: 50px;
-    border-radius: 20px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
     text-align: center;
-    max-width: 500px;
-    border: 2px solid var(--secondary-color);
-    animation: slideUp 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    max-width: 460px;
+    padding: 60px 50px;
+    background: linear-gradient(145deg, rgba(139, 35, 35, 0.4) 0%, rgba(45, 10, 10, 0.6) 100%);
+    border: 1px solid rgba(242, 201, 76, 0.25);
+    border-radius: 16px;
+    position: relative;
+    animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.modalIcon {
-    font-size: 4rem;
+/* Decorative corners */
+.modalContent::before,
+.modalContent::after {
+    content: '';
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border-color: var(--yellow);
+    border-style: solid;
+    opacity: 0.5;
+}
+
+.modalContent::before {
+    top: 12px;
+    left: 12px;
+    border-width: 2px 0 0 2px;
+}
+
+.modalContent::after {
+    bottom: 12px;
+    right: 12px;
+    border-width: 0 2px 2px 0;
+}
+
+.musicalNote {
+    font-size: 3.5rem;
+    color: var(--yellow);
     margin-bottom: 20px;
-    color: var(--secondary-color);
-    animation: pulse 2s infinite;
+    animation: glow 3s ease-in-out infinite alternate;
 }
 
 .modalTitle {
-    font-family: var(--font-heading);
-    font-size: 2.5rem;
-    color: var(--secondary-color);
-    margin-bottom: 15px;
+    font-family: var(--font-display);
+    font-size: 2.4rem;
+    font-weight: 500;
+    color: var(--yellow);
+    margin-bottom: 16px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
 }
 
 .modalText {
     font-family: var(--font-body);
-    font-size: 1.1rem;
-    color: #fff;
-    line-height: 1.6;
-    margin-bottom: 30px;
-}
-
-.modalText strong {
-    color: var(--secondary-color);
+    font-size: 0.95rem;
+    color: var(--yellow-soft);
+    line-height: 1.7;
+    margin-bottom: 36px;
 }
 
 .enableButton {
-    background: var(--secondary-color);
-    color: var(--primary-color);
-    font-family: var(--font-body);
-    font-size: 1.2rem;
+    background: linear-gradient(135deg, var(--yellow) 0%, var(--yellow-bright) 100%);
+    color: var(--maroon-deep);
+    font-family: var(--font-display);
+    font-size: 0.85rem;
     font-weight: 600;
-    padding: 15px 40px;
+    padding: 16px 48px;
     border: none;
-    border-radius: 50px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 5px 20px rgba(212, 175, 55, 0.3);
+    transition: all 0.4s ease;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    box-shadow: 0 4px 20px rgba(242, 201, 76, 0.3);
 }
 
 .enableButton:hover {
+    box-shadow: 0 6px 30px rgba(242, 201, 76, 0.5);
     transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(212, 175, 55, 0.5);
-    background: #fff;
-}
-
-.enableButton:active {
-    transform: translateY(0);
 }
 
 @keyframes fadeIn {
@@ -87,7 +106,7 @@
 @keyframes slideUp {
     from {
         opacity: 0;
-        transform: translateY(50px) scale(0.9);
+        transform: translateY(40px) scale(0.95);
     }
 
     to {
@@ -96,29 +115,24 @@
     }
 }
 
-@keyframes pulse {
-
-    0%,
-    100% {
-        transform: scale(1);
+@keyframes glow {
+    from {
+        filter: drop-shadow(0 0 8px rgba(242, 201, 76, 0.3));
     }
 
-    50% {
-        transform: scale(1.1);
+    to {
+        filter: drop-shadow(0 0 20px rgba(242, 201, 76, 0.6));
     }
 }
 
 @media (max-width: 768px) {
     .modalContent {
-        padding: 30px;
+        padding: 40px 30px;
         max-width: 90%;
+        margin: 0 20px;
     }
 
     .modalTitle {
         font-size: 2rem;
-    }
-
-    .modalText {
-        font-size: 1rem;
     }
 }

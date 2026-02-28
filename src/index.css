@@ -1,35 +1,24 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Great+Vibes&family=Lora:ital,wght@0,400;0,600;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Great+Vibes&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap');
 
 :root {
-  /* Premium Traditional Colors */
-  --primary-color: #5A0A0A;
-  /* Deeper, richer Maroon / Ruby */
-  --secondary-color: #D4AF37;
-  /* Base Gold */
-  --tertiary-color: #FFC30B;
-  /* Bright Gold */
-  --quaternary-color: #E7C27D;
-  /* Soft Gold / Sandalwood */
-
-  /* Backgrounds & Text */
-  --bg-color: #FFFDF7;
-  --bg-dark: #3A0505;
-  /* Even darker maroon for contrast */
-  --text-color: #FDFBF7;
-  /* Default to light text for dark premium backgrounds */
-  --text-dark: #3A2E2B;
-  /* For any light cards */
-  --white: #FFFFFF;
-
-  /* Glassmorphism Variables */
-  --glass-bg: rgba(60, 5, 5, 0.45);
-  /* Dark maroon tinted glass */
-  --glass-border: rgba(212, 175, 55, 0.35);
-  /* Subtle gold glass border */
-  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+  /* Experimented Palette: Deep Wine + Warm Saffron + Rose */
+  --maroon-deep: #1A0508;
+  --maroon: #5C1525;
+  --maroon-rich: #7A1E33;
+  --maroon-light: #9B2847;
+  --maroon-rose: #B33A5E;
+  --yellow: #F2C94C;
+  --yellow-bright: #FFD700;
+  --yellow-soft: #E8D5A3;
+  --saffron: #E8A838;
+  --rose-gold: #D4957A;
+  --cream: #FFF8E7;
+  --text-light: #FFF5ED;
+  --text-muted: #D4B896;
+  --border-gold: rgba(242, 201, 76, 0.3);
 
   /* Typography */
-  --font-heading: 'Cinzel', serif;
+  --font-display: 'Cormorant Garamond', serif;
   --font-script: 'Great Vibes', cursive;
   --font-body: 'Lora', serif;
 }
@@ -40,29 +29,17 @@
   padding: 0;
 }
 
-body {
-  font-family: var(--font-body);
-  background-color: var(--primary-color);
-  background-image: url('/silk-texture.png');
-  background-size: repeat;
-  /* It's a seamless texture */
-  background-attachment: fixed;
-  color: var(--text-color);
-  line-height: 1.6;
-  overflow-x: hidden;
-  position: relative;
+html {
+  scroll-behavior: smooth;
 }
 
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: radial-gradient(circle at center, transparent 0%, rgba(20, 0, 0, 0.6) 100%);
-  pointer-events: none;
-  z-index: -1;
+body {
+  font-family: var(--font-body);
+  background-color: var(--maroon-deep);
+  color: var(--text-light);
+  line-height: 1.7;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
 h1,
@@ -71,14 +48,10 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: var(--font-heading);
-  /* Champagne Gold Gradient for headings */
-  background: linear-gradient(135deg, #B58D3D 0%, #F8E7B0 25%, #E6C27A 50%, #FDF8E4 75%, #9C752B 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-size: 200% auto;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+  font-family: var(--font-display);
+  color: var(--yellow);
+  font-weight: 500;
+  letter-spacing: 0.03em;
 }
 
 a {
@@ -90,63 +63,257 @@ ul {
   list-style: none;
 }
 
-/* Utilities */
+/* === GLITTER / SPARKLE SYSTEM === */
+
+/* Glitter container — add .glitter-bg class to any section */
+.glitter-bg {
+  position: relative;
+  overflow: hidden;
+}
+
+.glitter-bg .glitter-canvas {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Individual sparkle particle */
+.sparkle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--yellow-bright);
+  box-shadow: 0 0 6px 1px rgba(255, 215, 0, 0.6);
+  animation: sparkleFloat var(--duration, 6s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+  opacity: 0;
+}
+
+.sparkle.rose {
+  background: var(--rose-gold);
+  box-shadow: 0 0 6px 1px rgba(212, 149, 122, 0.5);
+}
+
+.sparkle.saffron {
+  background: var(--saffron);
+  box-shadow: 0 0 6px 1px rgba(232, 168, 56, 0.5);
+}
+
+.sparkle.large {
+  width: 4px;
+  height: 4px;
+  box-shadow: 0 0 10px 2px rgba(255, 215, 0, 0.7);
+}
+
+.sparkle.tiny {
+  width: 2px;
+  height: 2px;
+  box-shadow: 0 0 4px 1px rgba(255, 215, 0, 0.4);
+}
+
+@keyframes sparkleFloat {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(0);
+  }
+
+  10% {
+    opacity: 1;
+    transform: translateY(-5px) scale(1);
+  }
+
+  50% {
+    opacity: 0.8;
+    transform: translateY(-30px) scale(1.2);
+  }
+
+  90% {
+    opacity: 0.3;
+    transform: translateY(-60px) scale(0.5);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-70px) scale(0);
+  }
+}
+
+
+/* === UTILITIES === */
+
 .container {
-  max-width: 1200px;
+  max-width: 1000px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 24px;
 }
 
 .section-title {
   text-align: center;
-  font-size: 3.5rem;
-  margin-bottom: 2.5rem;
-  /* Extends the base champagne gradient setup */
-  background: linear-gradient(135deg, #B58D3D 0%, #F8E7B0 25%, #E6C27A 50%, #FDF8E4 75%, #9C752B 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  font-family: var(--font-display);
+  font-size: 3rem;
+  font-weight: 500;
+  color: var(--yellow);
+  margin-bottom: 1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
-/* --- Premium Utilities --- */
-
-.gold-gradient-text {
-  background: linear-gradient(135deg, #B58D3D 0%, #F8E7B0 25%, #E6C27A 50%, #FDF8E4 75%, #9C752B 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-size: 200% auto;
+.section-padding {
+  padding: 100px 0;
 }
 
-.glass-panel {
-  background: var(--glass-bg);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--glass-shadow);
-  border-radius: 12px;
+/* Ornamental Divider */
+.ornament-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin: 2.5rem auto;
+  width: 280px;
 }
 
+.ornament-divider::before,
+.ornament-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--yellow), transparent);
+}
+
+/* Corner Frame */
+.corner-frame {
+  position: relative;
+}
+
+.corner-frame::before,
+.corner-frame::after {
+  content: '';
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border-color: var(--yellow);
+  border-style: solid;
+  opacity: 0.4;
+}
+
+.corner-frame::before {
+  top: 16px;
+  left: 16px;
+  border-width: 2px 0 0 2px;
+}
+
+.corner-frame::after {
+  bottom: 16px;
+  right: 16px;
+  border-width: 0 2px 2px 0;
+}
+
+/* Premium Button */
 .btn {
   display: inline-block;
-  padding: 12px 35px;
-  background: linear-gradient(135deg, rgba(230, 194, 122, 0.1) 0%, rgba(181, 141, 61, 0.2) 100%);
-  backdrop-filter: blur(5px);
-  color: var(--tertiary-color);
-  border: 1px solid var(--secondary-color);
-  border-radius: 6px;
-  font-family: var(--font-heading);
-  font-weight: 600;
-  font-size: 1.1rem;
-  letter-spacing: 1px;
+  padding: 14px 44px;
+  background: linear-gradient(135deg, var(--yellow) 0%, var(--yellow-bright) 50%, var(--saffron) 100%);
+  background-size: 200% auto;
+  color: var(--maroon-deep);
+  border: none;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
   cursor: pointer;
   transition: all 0.4s ease;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 20px rgba(242, 201, 76, 0.3);
 }
 
 .btn:hover {
-  background: linear-gradient(135deg, #E6C27A 0%, #9C752B 100%);
-  color: var(--primary-color);
-  box-shadow: 0 6px 20px rgba(230, 194, 122, 0.5);
+  background-position: right center;
+  box-shadow: 0 6px 30px rgba(242, 201, 76, 0.5);
   transform: translateY(-2px);
+}
+
+/* Shimmer text */
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+
+  100% {
+    background-position: 200% center;
+  }
+}
+
+/* Floating particles background (CSS) */
+.particles-bg {
+  position: relative;
+  overflow: hidden;
+}
+
+.particles-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(2px 2px at 15% 25%, rgba(255, 215, 0, 0.4), transparent),
+    radial-gradient(2px 2px at 75% 15%, rgba(212, 149, 122, 0.3), transparent),
+    radial-gradient(2px 2px at 35% 65%, rgba(232, 168, 56, 0.25), transparent),
+    radial-gradient(2px 2px at 82% 72%, rgba(255, 215, 0, 0.3), transparent),
+    radial-gradient(1px 1px at 8% 88%, rgba(242, 201, 76, 0.2), transparent),
+    radial-gradient(1px 1px at 92% 45%, rgba(212, 149, 122, 0.2), transparent),
+    radial-gradient(2px 2px at 55% 8%, rgba(255, 215, 0, 0.25), transparent),
+    radial-gradient(1px 1px at 45% 92%, rgba(232, 168, 56, 0.15), transparent);
+  pointer-events: none;
+  z-index: 1;
+  animation: twinkle 4s ease-in-out infinite alternate;
+}
+
+@keyframes twinkle {
+  0% {
+    opacity: 0.3;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.5;
+  }
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
 }

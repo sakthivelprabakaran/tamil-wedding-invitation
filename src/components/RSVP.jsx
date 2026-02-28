@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import ThamboolamSVG from './SVGs/ThamboolamSVG';
 import './RSVP.css';
 
 const RSVP = () => {
@@ -22,9 +21,6 @@ const RSVP = () => {
       <div className="container">
         <h2 className="section-title">RSVP</h2>
         <div className="rsvp-form-container">
-          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '30px' }}>
-            <ThamboolamSVG />
-          </div>
           {!submitted ? (
             <form onSubmit={handleSubmit} className="rsvp-form">
               <div className="form-group">
@@ -32,6 +28,7 @@ const RSVP = () => {
                 <input
                   type="text"
                   required
+                  placeholder="Enter your name"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 />
@@ -48,9 +45,10 @@ const RSVP = () => {
               </div>
 
               <div className="form-group">
-                <label>Message (Optional)</label>
+                <label>Message <span className="optional">(Optional)</span></label>
                 <textarea
                   rows="4"
+                  placeholder="Write a message for the couple..."
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                 ></textarea>
@@ -60,7 +58,7 @@ const RSVP = () => {
             </form>
           ) : (
             <div className="success-message">
-              <h3>Thank You!</h3>
+              <h3>Thank You</h3>
               <p>We are excited to see you there.</p>
             </div>
           )}

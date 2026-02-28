@@ -41,7 +41,7 @@ const Gallery = () => {
               <div className={styles.placeholderPhoto}>
                 {photo.caption}
                 <div className={`${styles.audioIndicator} ${playingIndex === index ? styles.playing : ''}`}>
-                  <Volume2 size={20} />
+                  <Volume2 size={16} />
                 </div>
               </div>
             </div>

@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Mic, ArrowRight } from 'lucide-react';
 import AudioModal from './AudioModal';
+import Glitter from './Glitter';
 import { publicUrl } from '../utils/publicUrl';
-import BananaTreeSVG from './SVGs/BananaTreeSVG';
 import styles from './EntryPage.module.css';
 
 const EntryPage = ({ onEnter }) => {
@@ -11,14 +10,9 @@ const EntryPage = ({ onEnter }) => {
   const [audioEnabled, setAudioEnabled] = useState(false);
   const [showModal, setShowModal] = useState(true);
   const [currentAudio, setCurrentAudio] = useState(null);
-  const [showArrows, setShowArrows] = useState(false);
   const conversationTimeoutRef = useRef(null);
   const targetSideRef = useRef(null);
-  const currentSideRef = useRef(null); // Track current side synchronously
-
-  // Empty useEffect for now since we removed falling hearts
-  useEffect(() => {
-  }, []);
+  const currentSideRef = useRef(null);
 
   const handleEnableAudio = () => {
     const testAudio = new Audio();
@@ -31,7 +25,6 @@ const EntryPage = ({ onEnter }) => {
     setShowModal(false);
   };
 
-  // Detect if user is on mobile
   const isMobile = () => {
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
       || window.innerWidth <= 768;
@@ -44,7 +37,7 @@ const EntryPage = ({ onEnter }) => {
     setAnimating(true);
     setTimeout(() => {
       onEnter(side);
-    }, 1500);
+    }, 1200);
   };
 
   const playAudioWithFallback = (audioPath, fallbackText, pitch = 1, rate = 1.1) => {
@@ -58,7 +51,6 @@ const EntryPage = ({ onEnter }) => {
           audio.onended = () => resolve();
         })
         .catch(() => {
-          console.log(`Using TTS fallback for: ${audioPath}`);
           const utterance = new SpeechSynthesisUtterance(fallbackText);
           utterance.pitch = pitch;
           utterance.rate = rate;
@@ -84,74 +76,33 @@ const EntryPage = ({ onEnter }) => {
 
   const handleMouseEnter = (side) => {
     if (!audioEnabled) return;
-
     targetSideRef.current = side;
-
-    // Trigger arrow animation on hover
-    setShowArrows(true);
-    setTimeout(() => setShowArrows(false), 2000);
-
     const previousSide = currentSideRef.current;
-
-    // Update ref immediately
     currentSideRef.current = side;
     setCurrentSide(side);
 
     if (previousSide === null) {
-      // First hover ever - play welcome
       stopAllAudio();
       if (side === 'groom') {
-        playAudioWithFallback(
-          publicUrl('/audio/groom_hover_welcome.m4a'),
-          "Hey! Are you on the groom's side? Click here to enter!",
-          0.9
-        );
+        playAudioWithFallback(publicUrl('/audio/groom_hover_welcome.m4a'), "Hey! Are you on the groom's side? Click here to enter!", 0.9);
       } else {
-        playAudioWithFallback(
-          publicUrl('/audio/bride_hover_welcome.m4a'),
-          "Hello! Are you on the bride's side? Come on in, click here!",
-          1.3
-        );
+        playAudioWithFallback(publicUrl('/audio/bride_hover_welcome.m4a'), "Hello! Are you on the bride's side? Come on in, click here!", 1.3);
       }
     } else if (previousSide !== side) {
-      // Switching sides - play jealous from previous side + response from new side
       stopAllAudio();
-
       if (previousSide === 'groom') {
-        // Coming from groom to bride
-        playAudioWithFallback(
-          publicUrl('/audio/groom_hover_jealous.m4a'),
-          "Hey hey hey! Stay here on my side! Don't go to the bride's side!",
-          0.85,
-          1.2
-        ).then(() => {
+        playAudioWithFallback(publicUrl('/audio/groom_hover_jealous.m4a'), "Hey hey hey! Stay here on my side!", 0.85, 1.2).then(() => {
           conversationTimeoutRef.current = setTimeout(() => {
             if (currentSideRef.current === 'bride') {
-              playAudioWithFallback(
-                publicUrl('/audio/bride_response_to_groom.m4a'),
-                "Hey groom, be calm! They're MY side now. Welcome to the bride's side!",
-                1.3,
-                1.1
-              );
+              playAudioWithFallback(publicUrl('/audio/bride_response_to_groom.m4a'), "They're MY side now. Welcome!", 1.3, 1.1);
             }
           }, 500);
         });
       } else {
-        // Coming from bride to groom
-        playAudioWithFallback(
-          publicUrl('/audio/bride_hover_jealous.m4a'),
-          "Wait wait wait! Don't leave me! Stay on the bride's side!",
-          1.35,
-          1.2
-        ).then(() => {
+        playAudioWithFallback(publicUrl('/audio/bride_hover_jealous.m4a'), "Wait! Don't leave me!", 1.35, 1.2).then(() => {
           conversationTimeoutRef.current = setTimeout(() => {
             if (currentSideRef.current === 'groom') {
-              playAudioWithFallback(
-                publicUrl('/audio/groom_response_to_bride.m4a'),
-                "Ha! They came back to MY side. Welcome back!",
-                0.9,
-                1.1
-              );
+              playAudioWithFallback(publicUrl('/audio/groom_response_to_bride.m4a'), "Ha! They came back to MY side!", 0.9, 1.1);
             }
           }, 500);
         });
@@ -159,80 +110,35 @@ const EntryPage = ({ onEnter }) => {
     }
   };
 
-  const handleMouseLeave = (side, event) => {
-    // No longer needed - all logic moved to mouseEnter
-  };
-
-  // Mobile touch handler - plays audio immediately on tap
   const handleTouch = (side) => {
     if (!audioEnabled || !isMobile()) return;
-
     const previousSide = currentSideRef.current;
-
-    // If tapping the same side again - navigate
-    if (previousSide === side) {
-      handleSelection(side);
-      return;
-    }
-
-    // Update immediately
+    if (previousSide === side) { handleSelection(side); return; }
     currentSideRef.current = side;
     setCurrentSide(side);
 
-    // Trigger audio immediately on tap
     if (previousSide === null) {
-      // First tap - welcome
       stopAllAudio();
       if (side === 'groom') {
-        playAudioWithFallback(
-          publicUrl('/audio/groom_hover_welcome.m4a'),
-          "Hey! Are you on the groom's side? Click here to enter!",
-          0.9
-        );
+        playAudioWithFallback(publicUrl('/audio/groom_hover_welcome.m4a'), "Hey! Are you on the groom's side?", 0.9);
       } else {
-        playAudioWithFallback(
-          publicUrl('/audio/bride_hover_welcome.m4a'),
-          "Hello! Are you on the bride's side? Come on in, click here!",
-          1.3
-        );
+        playAudioWithFallback(publicUrl('/audio/bride_hover_welcome.m4a'), "Hello! Are you on the bride's side?", 1.3);
       }
     } else if (previousSide !== side) {
-      // Switching - play conversation
       stopAllAudio();
-
       if (previousSide === 'groom') {
-        playAudioWithFallback(
-          publicUrl('/audio/groom_hover_jealous.m4a'),
-          "Hey hey hey! Stay here on my side! Don't go to the bride's side!",
-          0.85,
-          1.2
-        ).then(() => {
+        playAudioWithFallback(publicUrl('/audio/groom_hover_jealous.m4a'), "Stay here!", 0.85, 1.2).then(() => {
           conversationTimeoutRef.current = setTimeout(() => {
             if (currentSideRef.current === 'bride') {
-              playAudioWithFallback(
-                publicUrl('/audio/bride_response_to_groom.m4a'),
-                "Hey groom, be calm! They're MY side now. Welcome to the bride's side!",
-                1.3,
-                1.1
-              );
+              playAudioWithFallback(publicUrl('/audio/bride_response_to_groom.m4a'), "Welcome to my side!", 1.3, 1.1);
             }
           }, 500);
         });
       } else {
-        playAudioWithFallback(
-          publicUrl('/audio/bride_hover_jealous.m4a'),
-          "Wait wait wait! Don't leave me! Stay on the bride's side!",
-          1.35,
-          1.2
-        ).then(() => {
+        playAudioWithFallback(publicUrl('/audio/bride_hover_jealous.m4a'), "Don't leave!", 1.35, 1.2).then(() => {
           conversationTimeoutRef.current = setTimeout(() => {
             if (currentSideRef.current === 'groom') {
-              playAudioWithFallback(
-                publicUrl('/audio/groom_response_to_bride.m4a'),
-                "Ha! They came back to MY side. Welcome back!",
-                0.9,
-                1.1
-              );
+              playAudioWithFallback(publicUrl('/audio/groom_response_to_bride.m4a'), "Welcome back!", 0.9, 1.1);
             }
           }, 500);
         });
@@ -241,9 +147,7 @@ const EntryPage = ({ onEnter }) => {
   };
 
   useEffect(() => {
-    return () => {
-      stopAllAudio();
-    };
+    return () => { stopAllAudio(); };
   }, []);
 
   return (
@@ -252,83 +156,50 @@ const EntryPage = ({ onEnter }) => {
 
       <div className={`${styles.entryPage} ${animating ? styles.exiting : ''}`}>
 
-        {/* Top Decoration */}
-        <div className={styles.thoranamContainer}>
-          <img src="/gold_mandapam_border.png" alt="Mandapam Border" className={styles.mandapamBorderImg} />
-        </div>
-
-        {/* Flying Arrows */}
-        {showArrows && (
-          <>
-            <div className={`${styles.flyingArrow} ${styles.arrowLeft}`}>
-              <ArrowRight size={32} color="#D4AF37" />
-            </div>
-            <div className={`${styles.flyingArrow} ${styles.arrowRight}`}>
-              <ArrowRight size={32} color="#D4AF37" style={{ transform: 'rotate(180deg)' }} />
-            </div>
-          </>
-        )}
-
         <div
-          className={`${styles.split} ${styles.left}`}
+          className={`${styles.split} ${styles.left} glitter-bg`}
           onClick={(e) => {
-            if (isMobile() && !animating) {
-              e.preventDefault();
-              handleTouch('groom');
-            } else if (!isMobile()) {
-              handleSelection('groom');
-            }
+            if (isMobile() && !animating) { e.preventDefault(); handleTouch('groom'); }
+            else if (!isMobile()) { handleSelection('groom'); }
           }}
           onMouseEnter={() => !isMobile() && handleMouseEnter('groom')}
-          onMouseLeave={(e) => !isMobile() && handleMouseLeave('groom', e)}
         >
-          <div className={styles.bananaTreeLeft}>
-            <BananaTreeSVG />
-          </div>
+          <Glitter count={18} stars={5} />
           <div className={styles.content}>
+            <p className={styles.sideLabel}>Groom's Side</p>
             <div className={styles.character}>
               <img src={publicUrl('/groom-character.png')} alt="Groom" />
             </div>
-            <h2>Groom's Side</h2>
-            <p>Sakthivel Prabakaran</p>
-            <div className={styles.icon}><Mic size={48} /></div>
+            <h2 className={styles.name}>Sakthivel<br />Prabakaran</h2>
             <p className={styles.clickHint}>
-              {isMobile() ? 'Tap to Hear & Enter' : 'Click to Enter'}
+              {isMobile() ? 'Tap to hear & enter' : 'Click to enter'}
             </p>
           </div>
         </div>
 
         <div className={styles.divider}>
-          <div className={styles.dividerOrnament}>
-            <img src="/gold_mandala.png" alt="Mandala" className={styles.mandalaImg} />
-          </div>
+          <div className={styles.dividerLine}></div>
+          <span className={styles.dividerSymbol}>✦</span>
+          <div className={styles.dividerLine}></div>
         </div>
 
         <div
-          className={`${styles.split} ${styles.right}`}
+          className={`${styles.split} ${styles.right} glitter-bg`}
           onClick={(e) => {
-            if (isMobile() && !animating) {
-              e.preventDefault();
-              handleTouch('bride');
-            } else if (!isMobile()) {
-              handleSelection('bride');
-            }
+            if (isMobile() && !animating) { e.preventDefault(); handleTouch('bride'); }
+            else if (!isMobile()) { handleSelection('bride'); }
           }}
           onMouseEnter={() => !isMobile() && handleMouseEnter('bride')}
-          onMouseLeave={(e) => !isMobile() && handleMouseLeave('bride', e)}
         >
-          <div className={styles.bananaTreeRight}>
-            <BananaTreeSVG isFlipped />
-          </div>
+          <Glitter count={18} stars={5} />
           <div className={styles.content}>
+            <p className={styles.sideLabel}>Bride's Side</p>
             <div className={styles.character}>
               <img src={publicUrl('/bride-character.png')} alt="Bride" />
             </div>
-            <h2>Bride's Side</h2>
-            <p>Vivitha</p>
-            <div className={styles.icon}><Mic size={48} /></div>
+            <h2 className={styles.name}>Vivitha</h2>
             <p className={styles.clickHint}>
-              {isMobile() ? 'Tap to Hear & Enter' : 'Click to Enter'}
+              {isMobile() ? 'Tap to hear & enter' : 'Click to enter'}
             </p>
           </div>
         </div>

@@ -1,123 +1,100 @@
 .wedding-details {
-    background-color: transparent;
-    padding: 80px 0;
+    background: var(--maroon-deep);
     position: relative;
     overflow: hidden;
 }
 
-.wedding-jallikattu-bg {
+/* Ambient side glows */
+.wedding-details::before,
+.wedding-details::after {
+    content: '';
     position: absolute;
-    bottom: -10%;
-    right: -10%;
-    width: 600px;
-    height: 600px;
-    z-index: 1;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(242, 201, 76, 0.04) 0%, transparent 70%);
     pointer-events: none;
 }
 
-.container {
-    position: relative;
-    z-index: 5;
+.wedding-details::before {
+    top: 10%;
+    left: -100px;
 }
 
-.wedding-ornament {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-}
-
-.text-light {
-    color: var(--secondary-color) !important;
+.wedding-details::after {
+    bottom: 10%;
+    right: -100px;
 }
 
 .events-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 40px;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 32px;
     margin-top: 40px;
+    position: relative;
+    z-index: 2;
 }
 
 .event-card {
-    background: var(--glass-bg);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: linear-gradient(145deg, rgba(139, 35, 35, 0.4) 0%, rgba(45, 10, 10, 0.6) 100%);
+    border: 1px solid rgba(242, 201, 76, 0.15);
     border-radius: 12px;
-    box-shadow: var(--glass-shadow);
+    padding: 48px 40px;
     text-align: center;
-    border: 1px solid var(--glass-border);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: all 0.4s ease;
     position: relative;
-    /* important for corners & pillars */
-    padding: 0;
-    /* padding moved to content */
-    overflow: hidden;
 }
 
-.event-card-content {
-    padding: 50px 70px;
-    position: relative;
-    z-index: 5;
-}
-
-.kolam-corner {
-    opacity: 0.15;
-}
-
-.kolam-corner.tl {
-    top: 10px;
-    left: 10px;
-}
-
-.kolam-corner.tr {
-    top: 10px;
-    right: 10px;
-}
-
-.kolam-corner.bl {
-    bottom: 10px;
-    left: 10px;
-}
-
-.kolam-corner.br {
-    bottom: 10px;
-    right: 10px;
-}
-
-.yali-left,
-.yali-right {
+/* Corner accents */
+.event-card::before,
+.event-card::after {
+    content: '';
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
     width: 30px;
-    height: 80%;
-    opacity: 0.2;
+    height: 30px;
+    border-color: var(--yellow);
+    border-style: solid;
+    opacity: 0.25;
+    transition: opacity 0.4s ease;
 }
 
-.yali-left {
-    left: 20px;
+.event-card::before {
+    top: 12px;
+    left: 12px;
+    border-width: 2px 0 0 2px;
 }
 
-.yali-right {
-    right: 20px;
+.event-card::after {
+    bottom: 12px;
+    right: 12px;
+    border-width: 0 2px 2px 0;
 }
 
 .event-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
-    border-color: var(--secondary-color);
+    border-color: rgba(242, 201, 76, 0.4);
+    transform: translateY(-6px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 0 30px rgba(242, 201, 76, 0.05);
+}
+
+.event-card:hover::before,
+.event-card:hover::after {
+    opacity: 0.5;
 }
 
 .event-card h3 {
-    font-family: var(--font-heading);
-    font-size: 2.5rem;
-    margin-bottom: 20px;
+    font-family: var(--font-display);
+    font-size: 2.2rem;
+    font-weight: 500;
+    margin-bottom: 24px;
+    color: var(--yellow);
+    letter-spacing: 0.05em;
 }
 
 .event-info {
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    margin-bottom: 20px;
+    gap: 12px;
+    margin-bottom: 24px;
 }
 
 .info-item {
@@ -125,61 +102,53 @@
     align-items: center;
     justify-content: center;
     gap: 10px;
-    color: #555;
-    font-weight: 500;
+    color: var(--yellow-soft);
+    font-size: 0.95rem;
+}
+
+.info-item svg {
+    color: var(--yellow);
+    opacity: 0.7;
 }
 
 .description {
-    margin-bottom: 25px;
-    color: var(--text-color);
-    line-height: 1.6;
+    margin-bottom: 28px;
+    color: var(--yellow-soft);
+    line-height: 1.7;
+    font-size: 0.95rem;
+    opacity: 0.8;
 }
 
 .map-btn {
-    background-color: var(--primary-color);
-    color: var(--secondary-color);
-    border-color: var(--secondary-color);
-}
-
-.map-btn:hover {
-    background-color: var(--primary-color);
-    color: var(--white);
+    font-size: 0.8rem;
+    padding: 12px 36px;
 }
 
 @media (max-width: 768px) {
     .wedding-details {
-        padding: 60px 20px;
+        padding: 70px 20px;
     }
 
     .events-grid {
         grid-template-columns: 1fr;
-        gap: 30px;
-        margin-top: 30px;
+        gap: 24px;
     }
 
     .event-card {
-        padding: 25px;
+        padding: 36px 28px;
     }
 
     .event-card h3 {
-        font-size: 2rem;
-    }
-
-    .info-item {
-        font-size: 0.95rem;
+        font-size: 1.8rem;
     }
 }
 
 @media (max-width: 480px) {
-    .wedding-details {
-        padding: 40px 15px;
+    .event-card {
+        padding: 28px 20px;
     }
 
     .event-card h3 {
-        font-size: 1.75rem;
-    }
-
-    .event-card {
-        padding: 20px;
+        font-size: 1.5rem;
     }
 }
