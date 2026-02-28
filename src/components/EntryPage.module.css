@@ -14,6 +14,18 @@
     transform: translateY(-100%);
 }
 
+/* Top Thoranam Overlay for Entry Page */
+.entryThoranamContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    z-index: 100;
+    pointer-events: none;
+    /* Let clicks pass through to the doors */
+    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.4));
+}
+
 .split {
     flex: 1;
     display: flex;

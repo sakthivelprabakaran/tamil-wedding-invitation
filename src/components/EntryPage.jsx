@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import AudioModal from './AudioModal';
 import Glitter from './Glitter';
+import ThoranamSVG from './SVGs/ThoranamSVG';
 import { publicUrl } from '../utils/publicUrl';
 import styles from './EntryPage.module.css';
 
@@ -155,6 +156,11 @@ const EntryPage = ({ onEnter }) => {
       {showModal && <AudioModal onEnable={handleEnableAudio} />}
 
       <div className={`${styles.entryPage} ${animating ? styles.exiting : ''}`}>
+
+        {/* Top traditional simple thoranam border */}
+        <div className={styles.entryThoranamContainer}>
+          <ThoranamSVG />
+        </div>
 
         <div
           className={`${styles.split} ${styles.left} glitter-bg`}

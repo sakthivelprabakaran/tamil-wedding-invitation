@@ -12,17 +12,15 @@ const ThoranamSVG = ({ className = '', style = {} }) => {
 
     for (let i = 0; i < totalLeaves; i++) {
         const t = i / (totalLeaves - 1); // 0 to 1
-        // Catenary curve: x goes from 0 to 1200, y sags in the middle
+        // Straight line: x goes from 0 to 1200, y is constant
         const x = t * 1200;
-        const sag = Math.sin(t * Math.PI) * 55; // max sag of 55px at center
-        const y = 30 + sag;
+        const y = 55; // Shifted down so leaves don't clip top of viewBox
 
-        // Leaf angle — following the rope angle + slight random
-        const ropeAngle = Math.cos(t * Math.PI) * 25; // tangent angle
-        const leafAngle = 180 + ropeAngle + (Math.random() - 0.5) * 15;
+        // Leaf angle — mostly straight down with very slight random variation
+        const leafAngle = 180 + (Math.random() - 0.5) * 6;
 
         // Leaf size variation
-        const scale = 0.7 + Math.random() * 0.4;
+        const scale = 0.9 + Math.random() * 0.4;
 
         // Color variation — different shades of mango green
         const greenShade = Math.floor(Math.random() * 4);
@@ -78,126 +76,107 @@ const ThoranamSVG = ({ className = '', style = {} }) => {
                 </linearGradient>
             </defs>
 
-            {/* Wind sway animations for thoranam leaves */}
+            {/* Wind sway animations for thoranam leaves - OPTIMIZED FOR PERFORMANCE */}
             <style>{`
                 .thoranam-leaf {
-                    animation: mangoLeafSway var(--sway-dur, 5s) ease-in-out infinite;
+                    animation: mangoLeafSway var(--sway-dur, 5s) ease-in-out infinite alternate;
                     animation-delay: var(--sway-delay, 0s);
+                    /* Hardware acceleration to prevent jitter/repaint lag */
+                    will-change: transform;
+                    transform-origin: 0px 0px; 
                 }
                 .thoranam-rope {
-                    animation: ropeSway 8s ease-in-out infinite;
-                    transform-origin: center top;
+                    /* Removed rope sway to save performance, rope is straight anyway */
                 }
                 @keyframes mangoLeafSway {
-                    0%, 100% { transform: translate(var(--tx), var(--ty)) rotate(var(--base-rot)) scale(var(--sc)); }
-                    25% { transform: translate(var(--tx), var(--ty)) rotate(calc(var(--base-rot) + 4deg)) scale(var(--sc)); }
-                    50% { transform: translate(var(--tx), var(--ty)) rotate(calc(var(--base-rot) - 3deg)) scale(var(--sc)); }
-                    75% { transform: translate(var(--tx), var(--ty)) rotate(calc(var(--base-rot) + 2deg)) scale(var(--sc)); }
-                }
-                @keyframes ropeSway {
-                    0%, 100% { transform: translateY(0); }
-                    50% { transform: translateY(2px); }
+                    /* Using rotate3d and translate3d forces GPU hardware acceleration */
+                    0% { transform: translate3d(var(--tx), var(--ty), 0) rotate3d(0, 0, 1, calc(var(--base-rot) - 2deg)) scale(var(--sc)); }
+                    100% { transform: translate3d(var(--tx), var(--ty), 0) rotate3d(0, 0, 1, calc(var(--base-rot) + 2deg)) scale(var(--sc)); }
                 }
             `}</style>
 
             {/* === ROPE / STRING === */}
             <g className="thoranam-rope">
-                {/* Main rope — catenary curve */}
-                <path d="M 0 30 Q 300 85 600 85 Q 900 85 1200 30"
+                {/* Main rope — straight line */}
+                <path d="M 0 55 L 1200 55"
                     fill="none" stroke="#8B7340" strokeWidth="4" />
-                <path d="M 0 32 Q 300 87 600 87 Q 900 87 1200 32"
+                <path d="M 0 57 L 1200 57"
                     fill="none" stroke="#6B5530" strokeWidth="2.5" opacity="0.5" />
                 {/* Rope highlight */}
-                <path d="M 0 29 Q 300 84 600 84 Q 900 84 1200 29"
+                <path d="M 0 54 L 1200 54"
                     fill="none" stroke="#C4A35A" strokeWidth="1.5" opacity="0.4" />
 
                 {/* === HANGING KNOTS at intervals === */}
                 {[0, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200].map((kx, i) => {
-                    const kt = kx / 1200;
-                    const ky = 30 + Math.sin(kt * Math.PI) * 55;
+                    const ky = 55; // Straight line matching rope
                     return (
                         <circle key={`knot-${i}`} cx={kx} cy={ky} r="3.5"
                             fill="#8B7340" stroke="#C4A35A" strokeWidth="0.8" />
                     );
                 })}
 
-                {/* === MANGO LEAVES === */}
+                {/* === MANGO LEAVES AND BRIGHT YELLOW FLOWERS === */}
                 {leaves.map((leaf) => {
                     const gradId = `mangoLeaf${(leaf.greenShade % 4) + 1}`;
                     const swayDur = 4 + (leaf.key % 5) * 0.7; // 4s to 6.8s
                     const swayDelay = (leaf.key * 0.3) % 3; // staggered
                     return (
-                        <g key={leaf.key}
-                            className="thoranam-leaf"
-                            style={{
-                                '--tx': `${leaf.x}px`,
-                                '--ty': `${leaf.y}px`,
-                                '--base-rot': `${leaf.angle}deg`,
-                                '--sc': leaf.scale,
-                                '--sway-dur': `${swayDur}s`,
-                                '--sway-delay': `-${swayDelay}s`,
-                            }}>
-                            {/* Leaf body */}
-                            <path d="M 0 0
-                                     C 4 -8 6 -20 5 -35
-                                     C 4 -45 2 -52 0 -58
-                                     C -2 -52 -4 -45 -5 -35
-                                     C -6 -20 -4 -8 0 0 Z"
-                                fill={`url(#${gradId})`}
-                                stroke={getLeafColor(leaf.greenShade)}
-                                strokeWidth="0.5"
-                                opacity="0.9" />
-                            {/* Midrib */}
-                            <line x1="0" y1="0" x2="0" y2="-56"
-                                stroke={getLeafHighlight(leaf.greenShade)}
-                                strokeWidth="0.8" opacity="0.6" />
-                            {/* Side veins */}
-                            <path d="M 0 -10 L 3.5 -15" stroke={getLeafHighlight(leaf.greenShade)} strokeWidth="0.4" opacity="0.35" />
-                            <path d="M 0 -10 L -3.5 -15" stroke={getLeafHighlight(leaf.greenShade)} strokeWidth="0.4" opacity="0.35" />
-                            <path d="M 0 -20 L 4 -26" stroke={getLeafHighlight(leaf.greenShade)} strokeWidth="0.4" opacity="0.3" />
-                            <path d="M 0 -20 L -4 -26" stroke={getLeafHighlight(leaf.greenShade)} strokeWidth="0.4" opacity="0.3" />
-                            <path d="M 0 -30 L 3.5 -36" stroke={getLeafHighlight(leaf.greenShade)} strokeWidth="0.4" opacity="0.25" />
-                            <path d="M 0 -30 L -3.5 -36" stroke={getLeafHighlight(leaf.greenShade)} strokeWidth="0.4" opacity="0.25" />
-                            <path d="M 0 -40 L 3 -45" stroke={getLeafHighlight(leaf.greenShade)} strokeWidth="0.3" opacity="0.2" />
-                            <path d="M 0 -40 L -3 -45" stroke={getLeafHighlight(leaf.greenShade)} strokeWidth="0.3" opacity="0.2" />
-                            {/* Leaf stem */}
-                            <line x1="0" y1="0" x2="0" y2="5"
-                                stroke="#6B5530" strokeWidth="1" />
+                        <g key={leaf.key}>
+                            {/* Leaf with Wind Animation */}
+                            <g className="thoranam-leaf"
+                                style={{
+                                    '--tx': `${leaf.x}px`,
+                                    '--ty': `${leaf.y}px`,
+                                    '--base-rot': `${leaf.angle}deg`,
+                                    '--sc': leaf.scale,
+                                    '--sway-dur': `${swayDur}s`,
+                                    '--sway-delay': `-${swayDelay}s`,
+                                }}>
+                                {/* Leaf body - modified for proper fuller shape */}
+                                <path d="M 0 0
+                                         C 8 -10 12 -30 0 -60
+                                         C -12 -30 -8 -10 0 0 Z"
+                                    fill={`url(#${gradId})`}
+                                    stroke={getLeafColor(leaf.greenShade)}
+                                    strokeWidth="0.5"
+                                    opacity="0.9" />
+                                {/* Midrib */}
+                                <line x1="0" y1="0" x2="0" y2="-58"
+                                    stroke={getLeafHighlight(leaf.greenShade)}
+                                    strokeWidth="0.8" opacity="0.6" />
+                                {/* Side veins */}
+                                <path d="M 0 -10 L 4 -15" stroke={getLeafHighlight(leaf.greenShade)} strokeWidth="0.4" opacity="0.35" />
+                                <path d="M 0 -10 L -4 -15" stroke={getLeafHighlight(leaf.greenShade)} strokeWidth="0.4" opacity="0.35" />
+                                <path d="M 0 -22 L 5 -28" stroke={getLeafHighlight(leaf.greenShade)} strokeWidth="0.4" opacity="0.3" />
+                                <path d="M 0 -22 L -5 -28" stroke={getLeafHighlight(leaf.greenShade)} strokeWidth="0.4" opacity="0.3" />
+                                <path d="M 0 -34 L 4 -40" stroke={getLeafHighlight(leaf.greenShade)} strokeWidth="0.4" opacity="0.25" />
+                                <path d="M 0 -34 L -4 -40" stroke={getLeafHighlight(leaf.greenShade)} strokeWidth="0.4" opacity="0.25" />
+                                <path d="M 0 -46 L 3 -51" stroke={getLeafHighlight(leaf.greenShade)} strokeWidth="0.3" opacity="0.2" />
+                                <path d="M 0 -46 L -3 -51" stroke={getLeafHighlight(leaf.greenShade)} strokeWidth="0.3" opacity="0.2" />
+                                {/* Leaf stem */}
+                                <line x1="0" y1="0" x2="0" y2="5"
+                                    stroke="#6B5530" strokeWidth="1" />
+                            </g>
+
+                            {/* SMALLER, BRIGHTER YELLOW FLOWER AT ROOT */}
+                            <g transform={`translate(${leaf.x}, ${leaf.y}) scale(${0.5 + leaf.scale * 0.2})`}>
+                                {/* Outer bright yellow petals */}
+                                <circle cx="0" cy="0" r="9.5" fill="#FFD700" />
+                                <circle cx="0" cy="0" r="6" fill="#FFA000" />
+                                <circle cx="0" cy="0" r="3" fill="#D84315" />
+                                {/* Starburst petals */}
+                                <path d="M 0 -9.5 Q 2.5 -4.5 0 0 Q -2.5 -4.5 0 -9.5 Z" fill="#FFFBE6" opacity="0.9" />
+                                <path d="M 0 9.5 Q 2.5 4.5 0 0 Q -2.5 4.5 0 9.5 Z" fill="#FFFBE6" opacity="0.9" />
+                                <path d="M 9.5 0 Q 4.5 2.5 0 0 Q 4.5 -2.5 9.5 0 Z" fill="#FFFBE6" opacity="0.9" />
+                                <path d="M -9.5 0 Q -4.5 2.5 0 0 Q -4.5 -2.5 -9.5 0 Z" fill="#FFFBE6" opacity="0.9" />
+                                {/* Inner ring */}
+                                <circle cx="0" cy="0" r="1.5" fill="#FFEB3B" />
+                            </g>
                         </g>
                     );
                 })}
 
-                {/* === DECORATIVE MARIGOLD/TURMERIC DOTS === */}
-                {[150, 350, 600, 850, 1050].map((dx, i) => {
-                    const dt = dx / 1200;
-                    const dy = 28 + Math.sin(dt * Math.PI) * 55;
-                    return (
-                        <g key={`flower-${i}`}>
-                            <circle cx={dx} cy={dy} r="5" fill="#E8A838" opacity="0.7" />
-                            <circle cx={dx} cy={dy} r="3" fill="#F2C94C" opacity="0.5" />
-                            <circle cx={dx} cy={dy} r="1.5" fill="#FFD700" opacity="0.6" />
-                        </g>
-                    );
-                })}
-
-                {/* === END TASSELS === */}
-                <g transform="translate(0, 30)">
-                    <line x1="0" y1="0" x2="0" y2="15" stroke="#8B7340" strokeWidth="2" />
-                    <circle cx="0" cy="18" r="4" fill="#E8A838" opacity="0.6" />
-                    <circle cx="0" cy="18" r="2.5" fill="#F2C94C" opacity="0.5" />
-                </g>
-                <g transform="translate(1200, 30)">
-                    <line x1="0" y1="0" x2="0" y2="15" stroke="#8B7340" strokeWidth="2" />
-                    <circle cx="0" cy="18" r="4" fill="#E8A838" opacity="0.6" />
-                    <circle cx="0" cy="18" r="2.5" fill="#F2C94C" opacity="0.5" />
-                </g>
-                {/* Center tassel */}
-                <g transform="translate(600, 85)">
-                    <line x1="0" y1="0" x2="0" y2="20" stroke="#8B7340" strokeWidth="2.5" />
-                    <circle cx="0" cy="24" r="6" fill="#E8A838" opacity="0.7" />
-                    <circle cx="0" cy="24" r="3.5" fill="#F2C94C" opacity="0.5" />
-                    <circle cx="0" cy="24" r="1.5" fill="#FFD700" opacity="0.6" />
-                </g>
+                {/* NO BOTTOM TASSELS REQUIRED FOR STRAIGHT THORANAM */}
             </g>
         </svg>
     );
