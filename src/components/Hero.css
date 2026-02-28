@@ -284,19 +284,16 @@
 
     .hero-banana-left,
     .hero-banana-right {
-        width: auto;
-        height: 100%;
-        opacity: 0.45;
+        width: 380px;
+        opacity: 0.65;
     }
 
     .hero-banana-left {
-        left: 0;
-        transform: translateX(-60%);
+        left: -180px;
     }
 
     .hero-banana-right {
-        right: 0;
-        transform: translateX(60%);
+        right: -180px;
     }
 
     .hero-temple {
@@ -330,19 +327,16 @@
 
     .hero-banana-left,
     .hero-banana-right {
-        width: auto;
-        height: 100%;
-        opacity: 0.4;
+        width: 320px;
+        opacity: 0.60;
     }
 
     .hero-banana-left {
-        left: 0;
-        transform: translateX(-65%);
+        left: -150px;
     }
 
     .hero-banana-right {
-        right: 0;
-        transform: translateX(65%);
+        right: -150px;
     }
 
     .hero-temple {
