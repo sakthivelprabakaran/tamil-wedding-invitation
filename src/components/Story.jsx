@@ -10,7 +10,9 @@ const Story = () => {
         <h2 className="section-title">Our Story</h2>
         <div className="story-content">
           <div className="story-image">
-            <div className="placeholder-img">Couple Photo</div>
+            <div className="photo-frame">
+              <img src={`${import.meta.env.BASE_URL}couple_photo.jpg`} alt="Sakthivel and Vivitha" />
+            </div>
           </div>
           <div className="story-text">
             <h3>How We Met</h3>
