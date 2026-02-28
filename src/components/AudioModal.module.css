@@ -216,20 +216,69 @@
     line-height: 1.7;
 }
 
+/* ===== MOBILE THIRUKKURAL (inside modal) ===== */
+.kuralMobile {
+    display: none;
+    /* hidden on desktop */
+    margin-top: 36px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(242, 201, 76, 0.2);
+    transition: opacity 0.6s ease;
+}
+
+.kuralTamilMobile {
+    font-family: 'Noto Serif Tamil', serif;
+    font-size: 0.95rem;
+    color: var(--yellow-soft);
+    line-height: 1.8;
+    white-space: pre-line;
+    margin-bottom: 12px;
+}
+
+.kuralDividerMobile {
+    width: 30px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(242, 201, 76, 0.4), transparent);
+    margin: 0 auto 12px;
+}
+
+.kuralMeaningMobile {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    color: rgba(255, 235, 180, 0.45);
+    font-style: italic;
+    line-height: 1.5;
+}
+
 @media (max-width: 1024px) {
     .kuralSidePanel {
         display: none;
+    }
+
+    .kuralMobile {
+        display: block;
     }
 }
 
 @media (max-width: 768px) {
     .modalContent {
-        padding: 40px 30px;
+        padding: 40px 24px;
         max-width: 90%;
-        margin: 0 20px;
+        margin: 0 16px;
+        max-height: 85vh;
+        overflow-y: auto;
     }
 
     .modalTitle {
         font-size: 2rem;
+    }
+
+    .musicalNote {
+        margin-bottom: 12px;
+        font-size: 2.8rem;
+    }
+
+    .modalText {
+        margin-bottom: 24px;
     }
 }

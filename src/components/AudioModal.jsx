@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './AudioModal.module.css';
 import SikkuKolamSVG from './SVGs/SikkuKolamSVG';
 import KolamCorners from './KolamCorners';
+import Glitter from './Glitter';
 
 const kurals = [
     {
@@ -72,7 +73,9 @@ const AudioModal = ({ onEnable }) => {
     const kural = kurals[currentIndex];
 
     return (
-        <div className={styles.audioModal}>
+        <div className={`${styles.audioModal} glitter-bg`}>
+            {/* GLITTER BACKGROUND */}
+            <Glitter count={55} />
 
             {/* FULL-SCREEN KOLAM BACKGROUND */}
             <div className={styles.kolamBg}>
@@ -105,6 +108,13 @@ const AudioModal = ({ onEnable }) => {
                 >
                     Enable Audio &amp; Enter
                 </button>
+
+                {/* MOBILE THIRUKKURAL PANEL (hidden on desktop) */}
+                <div className={`${styles.kuralMobile} ${visible ? styles.kuralVisible : styles.kuralHidden}`}>
+                    <p className={styles.kuralTamilMobile}>{kural.tamil}</p>
+                    <div className={styles.kuralDividerMobile}></div>
+                    <p className={styles.kuralMeaningMobile}>"{kural.meaning}"</p>
+                </div>
             </div>
 
             {/* RIGHT FLOATING KURAL PANEL */}
