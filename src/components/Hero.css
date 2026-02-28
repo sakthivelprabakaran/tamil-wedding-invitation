@@ -282,8 +282,20 @@
 
     .hero-banana-left,
     .hero-banana-right {
-        width: 150px;
-        opacity: 0.4;
+        width: 220px;
+        opacity: 0.25;
+    }
+
+    .hero-banana-left {
+        left: -80px;
+    }
+
+    .hero-banana-right {
+        right: -80px;
+    }
+
+    .hero-temple {
+        width: 80%;
     }
 }
 
@@ -293,8 +305,8 @@
     }
 
     .hero-name {
-        font-size: 1.5rem;
-        letter-spacing: 0.06em;
+        font-size: 1.4rem;
+        letter-spacing: 0.05em;
     }
 
     .hero-ampersand {
@@ -311,7 +323,21 @@
 
     .hero-banana-left,
     .hero-banana-right {
-        width: 100px;
-        opacity: 0.3;
+        width: 200px;
+        opacity: 0.2;
+    }
+
+    .hero-banana-left {
+        left: -90px;
+    }
+
+    .hero-banana-right {
+        right: -90px;
+    }
+
+    .hero-temple {
+        width: 95%;
+        opacity: 0.12;
+        bottom: 5px;
     }
 }

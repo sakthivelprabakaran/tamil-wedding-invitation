@@ -33,6 +33,7 @@ const VerticalGarlandSVG = ({ side = 'left', opacity = 0.5, width = 48 }) => {
 
     return (
         <svg
+            className={`vertical-garland vertical-garland-${side}`}
             xmlns="http://www.w3.org/2000/svg"
             style={posStyle}
             preserveAspectRatio="xMidYMin slice"
