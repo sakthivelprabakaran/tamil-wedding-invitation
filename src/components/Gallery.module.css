@@ -23,48 +23,31 @@
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
 }
 
-.placeholderPhoto {
+.photoContainer {
     width: 100%;
-    height: 300px;
+    height: 350px;
     background: linear-gradient(145deg, rgba(139, 35, 35, 0.4) 0%, rgba(45, 10, 10, 0.5) 100%);
-    border: 1px solid rgba(242, 201, 76, 0.15);
+    border: 3px solid rgba(242, 201, 76, 0.4);
     border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1rem;
-    font-family: var(--font-body);
-    color: var(--yellow-soft);
-    transition: border-color 0.4s ease;
     position: relative;
-    letter-spacing: 1px;
-    opacity: 0.8;
+    overflow: hidden;
+    transition: border-color 0.4s ease;
 }
 
-.galleryItem:hover .placeholderPhoto {
-    border-color: rgba(242, 201, 76, 0.4);
+.photoContainer img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-.audioIndicator {
-    position: absolute;
-    bottom: 12px;
-    right: 12px;
-    background: rgba(45, 10, 10, 0.8);
-    border: 1px solid rgba(242, 201, 76, 0.25);
-    border-radius: 50%;
-    padding: 8px;
-    color: var(--yellow-soft);
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.galleryItem:hover .photoContainer {
+    border-color: rgba(242, 201, 76, 0.8);
 }
 
-.audioIndicator.playing {
-    background: var(--yellow);
-    color: var(--maroon-deep);
-    border-color: var(--yellow);
-    box-shadow: 0 0 15px rgba(242, 201, 76, 0.4);
+.galleryItem:hover .photoContainer img {
+    transform: scale(1.08);
 }
 
 @media (max-width: 768px) {
@@ -77,8 +60,8 @@
         gap: 16px;
     }
 
-    .placeholderPhoto {
-        height: 240px;
+    .photoContainer {
+        height: 280px;
     }
 }
 
@@ -91,7 +74,7 @@
         grid-template-columns: 1fr;
     }
 
-    .placeholderPhoto {
-        height: 200px;
+    .photoContainer {
+        height: 300px;
     }
 }

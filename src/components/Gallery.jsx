@@ -1,30 +1,19 @@
-import React, { useState } from 'react';
-import { Volume2 } from 'lucide-react';
-import { audioManager } from '../utils/audioManager';
+import React from 'react';
 import { publicUrl } from '../utils/publicUrl';
 import styles from './Gallery.module.css';
 
 const Gallery = () => {
-  const [playingIndex, setPlayingIndex] = useState(null);
-
   const photos = [
-    { id: 1, caption: 'Photo 1', audioSrc: publicUrl('/audio/photo1.mp3') },
-    { id: 2, caption: 'Photo 2', audioSrc: publicUrl('/audio/photo2.mp3') },
-    { id: 3, caption: 'Photo 3', audioSrc: publicUrl('/audio/photo3.mp3') },
-    { id: 4, caption: 'Photo 4', audioSrc: publicUrl('/audio/photo4.mp3') },
-    { id: 5, caption: 'Photo 5', audioSrc: publicUrl('/audio/photo5.mp3') },
-    { id: 6, caption: 'Photo 6', audioSrc: publicUrl('/audio/photo6.mp3') },
+    { id: 1, src: publicUrl('/gallery/IMG_6899.JPG') },
+    { id: 2, src: publicUrl('/gallery/IMG_6902.JPG') },
+    { id: 3, src: publicUrl('/gallery/IMG_6902_2.JPG') },
+    { id: 4, src: publicUrl('/gallery/IMG_6915.JPG') },
+    { id: 5, src: publicUrl('/gallery/IMG_6935.JPG') },
+    { id: 6, src: publicUrl('/gallery/UGA_1348.JPEG') },
+    { id: 7, src: publicUrl('/gallery/UGA_1354.JPEG') },
+    { id: 8, src: publicUrl('/gallery/UGA_1363.JPEG') },
+    { id: 9, src: publicUrl('/gallery/d6851663-2c7f-4a0f-917d-d396bcf73a11.JPG') },
   ];
-
-  const handlePhotoHover = (index, audioSrc) => {
-    setPlayingIndex(index);
-    audioManager.play(audioSrc, false);
-  };
-
-  const handlePhotoLeave = () => {
-    setPlayingIndex(null);
-    audioManager.stop();
-  };
 
   return (
     <section className={styles.gallery} id="gallery">
@@ -35,14 +24,9 @@ const Gallery = () => {
             <div
               key={photo.id}
               className={styles.galleryItem}
-              onMouseEnter={() => handlePhotoHover(index, photo.audioSrc)}
-              onMouseLeave={handlePhotoLeave}
             >
-              <div className={styles.placeholderPhoto}>
-                {photo.caption}
-                <div className={`${styles.audioIndicator} ${playingIndex === index ? styles.playing : ''}`}>
-                  <Volume2 size={16} />
-                </div>
+              <div className={styles.photoContainer}>
+                <img src={photo.src} alt={`Gallery image ${index + 1}`} loading="lazy" />
               </div>
             </div>
           ))}
