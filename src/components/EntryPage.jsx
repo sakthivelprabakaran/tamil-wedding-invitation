@@ -179,8 +179,8 @@ const EntryPage = ({ onEnter, onAudioEnabled }) => {
               <SikkuKolamSVG opacity={0.22} animationDelay="0.5s" />
             </div>
             <p className={styles.sideLabel}>Groom's Side</p>
-            <div className={styles.photoContainer}>
-              <img src={publicUrl('/couple_photo.jpg')} alt="Couple" />
+            <div className={styles.character}>
+              <img src={publicUrl('/groom-character.png')} alt="Groom" />
             </div>
             <h2 className={styles.name}>Sakthivel<br />Prabakaran</h2>
             <p className={styles.clickHint}>
@@ -210,8 +210,8 @@ const EntryPage = ({ onEnter, onAudioEnabled }) => {
               <SikkuKolamSVG opacity={0.22} animationDelay="0.8s" />
             </div>
             <p className={styles.sideLabel}>Bride's Side</p>
-            <div className={styles.photoContainer}>
-              <img src={publicUrl('/couple_photo.jpg')} alt="Couple" />
+            <div className={styles.character}>
+              <img src={publicUrl('/bride-character.png')} alt="Bride" />
             </div>
             <h2 className={styles.name}>Vivitha</h2>
             <p className={styles.clickHint}>
