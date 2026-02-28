@@ -14,7 +14,7 @@ const ThoranamSVG = ({ className = '', style = {} }) => {
         const t = i / (totalLeaves - 1); // 0 to 1
         // Straight line: x goes from 0 to 1200, y is constant
         const x = t * 1200;
-        const y = 55; // Shifted down so leaves don't clip top of viewBox
+        const y = 12; // Aligned to top, leaving just enough room for the top half of the flowers
 
         // Leaf angle — mostly straight down with very slight random variation
         const leafAngle = 180 + (Math.random() - 0.5) * 6;
@@ -98,17 +98,17 @@ const ThoranamSVG = ({ className = '', style = {} }) => {
             {/* === ROPE / STRING === */}
             <g className="thoranam-rope">
                 {/* Main rope — straight line */}
-                <path d="M 0 55 L 1200 55"
+                <path d="M 0 12 L 1200 12"
                     fill="none" stroke="#8B7340" strokeWidth="4" />
-                <path d="M 0 57 L 1200 57"
+                <path d="M 0 14 L 1200 14"
                     fill="none" stroke="#6B5530" strokeWidth="2.5" opacity="0.5" />
                 {/* Rope highlight */}
-                <path d="M 0 54 L 1200 54"
+                <path d="M 0 11 L 1200 11"
                     fill="none" stroke="#C4A35A" strokeWidth="1.5" opacity="0.4" />
 
                 {/* === HANGING KNOTS at intervals === */}
                 {[0, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200].map((kx, i) => {
-                    const ky = 55; // Straight line matching rope
+                    const ky = 12; // Straight line matching rope
                     return (
                         <circle key={`knot-${i}`} cx={kx} cy={ky} r="3.5"
                             fill="#8B7340" stroke="#C4A35A" strokeWidth="0.8" />
