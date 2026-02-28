@@ -1,5 +1,6 @@
 import React from 'react';
 import { MapPin, Calendar, Clock } from 'lucide-react';
+import KolamCorners from './KolamCorners';
 import './WeddingDetails.css';
 
 const EventCard = ({ title, date, time, location, description }) => (
@@ -27,6 +28,7 @@ const EventCard = ({ title, date, time, location, description }) => (
 const WeddingDetails = () => {
   return (
     <section className="wedding-details section-padding" id="events">
+      <KolamCorners size={80} opacity={0.35} offset={12} />
       <div className="container">
         <h2 className="section-title">Wedding Events</h2>
 

@@ -1,9 +1,11 @@
 import React from 'react';
+import KolamCorners from './KolamCorners';
 import './Story.css';
 
 const Story = () => {
   return (
     <section className="story section-padding">
+      <KolamCorners size={80} opacity={0.35} offset={12} />
       <div className="container">
         <h2 className="section-title">Our Story</h2>
         <div className="story-content">

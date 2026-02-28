@@ -2,10 +2,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import AudioModal from './AudioModal';
 import Glitter from './Glitter';
 import ThoranamSVG from './SVGs/ThoranamSVG';
+import SikkuKolamSVG from './SVGs/SikkuKolamSVG';
 import { publicUrl } from '../utils/publicUrl';
 import styles from './EntryPage.module.css';
 
-const EntryPage = ({ onEnter }) => {
+const EntryPage = ({ onEnter, onAudioEnabled }) => {
   const [animating, setAnimating] = useState(false);
   const [currentSide, setCurrentSide] = useState(null);
   const [audioEnabled, setAudioEnabled] = useState(false);
@@ -22,6 +23,7 @@ const EntryPage = ({ onEnter }) => {
     testAudio.play().catch(() => { });
     setTimeout(() => testAudio.pause(), 100);
 
+    if (onAudioEnabled) onAudioEnabled();
     setAudioEnabled(true);
     setShowModal(false);
   };
@@ -172,6 +174,10 @@ const EntryPage = ({ onEnter }) => {
         >
           <Glitter count={18} stars={5} />
           <div className={styles.content}>
+            {/* Sikku Kolam watermark behind groom name */}
+            <div className={styles.kolamWatermark}>
+              <SikkuKolamSVG opacity={0.22} animationDelay="0.5s" />
+            </div>
             <p className={styles.sideLabel}>Groom's Side</p>
             <div className={styles.character}>
               <img src={publicUrl('/groom-character.png')} alt="Groom" />
@@ -199,6 +205,10 @@ const EntryPage = ({ onEnter }) => {
         >
           <Glitter count={18} stars={5} />
           <div className={styles.content}>
+            {/* Sikku Kolam watermark behind bride name */}
+            <div className={styles.kolamWatermark}>
+              <SikkuKolamSVG opacity={0.22} animationDelay="0.8s" />
+            </div>
             <p className={styles.sideLabel}>Bride's Side</p>
             <div className={styles.character}>
               <img src={publicUrl('/bride-character.png')} alt="Bride" />

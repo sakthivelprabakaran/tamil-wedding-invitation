@@ -15,3 +15,13 @@
   z-index: 100;
   pointer-events: none;
 }
+
+/* === GARLAND SECTION DIVIDER === */
+.garland-divider {
+  width: 100%;
+  padding: 0;
+  overflow: visible;
+  line-height: 0;
+  position: relative;
+  z-index: 2;
+}

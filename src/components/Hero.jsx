@@ -2,6 +2,8 @@ import React from 'react';
 import Glitter from './Glitter';
 import BananaTreeSVG from './SVGs/BananaTreeSVG';
 import ThoranamSVG from './SVGs/ThoranamSVG';
+import KolamCorners from './KolamCorners';
+import { publicUrl } from '../utils/publicUrl';
 import './Hero.css';
 
 /**
@@ -28,6 +30,9 @@ const Hero = () => {
     <section className="hero glitter-bg">
       <Glitter count={35} stars={0} />
 
+      {/* Kolam corner decorations at all 4 corners */}
+      <KolamCorners size={100} opacity={0.4} offset={16} />
+
       {/* Mango leaf thoranam at the top */}
       <div className="hero-thoranam">
         <ThoranamSVG />
@@ -39,6 +44,11 @@ const Hero = () => {
       </div>
       <div className="hero-banana-right">
         <BananaTreeSVG isFlipped />
+      </div>
+
+      {/* Temple Gopuram — centered background decoration */}
+      <div className="hero-temple">
+        <img src={publicUrl('/temple_gopuram Background Removed.png')} alt="" aria-hidden="true" />
       </div>
 
       <div className="hero-content">

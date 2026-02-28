@@ -1,0 +1,3 @@
+# Block all search engine indexing — keep invitation private
+User-agent: *
+Disallow: /

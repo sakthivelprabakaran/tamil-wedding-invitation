@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import KolamCorners from './KolamCorners';
 import './RSVP.css';
 
 const RSVP = () => {
@@ -18,6 +19,7 @@ const RSVP = () => {
 
   return (
     <section className="rsvp section-padding" id="rsvp">
+      <KolamCorners size={80} opacity={0.35} offset={12} />
       <div className="container">
         <h2 className="section-title">RSVP</h2>
         <div className="rsvp-form-container">

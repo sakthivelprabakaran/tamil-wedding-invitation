@@ -24,6 +24,39 @@
     z-index: 3;
 }
 
+/* === TEMPLE GOPURAM BACKGROUND === */
+.hero-temple {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 55%;
+    max-width: 680px;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.18;
+    filter: drop-shadow(0 0 40px rgba(242, 201, 76, 0.15));
+    animation: templeFloat 8s ease-in-out infinite;
+}
+
+.hero-temple img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+@keyframes templeFloat {
+
+    0%,
+    100% {
+        transform: translateX(-50%) translateY(0px);
+    }
+
+    50% {
+        transform: translateX(-50%) translateY(-8px);
+    }
+}
+
 /* === THORANAM (Mango leaf festoon) === */
 .hero-thoranam {
     position: absolute;
