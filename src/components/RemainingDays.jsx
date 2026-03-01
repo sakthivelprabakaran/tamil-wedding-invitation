@@ -8,8 +8,8 @@ const RemainingDays = () => {
     useEffect(() => {
         // The wedding date: March 25, 2026
         const targetDate = new Date('2026-03-25T00:00:00').getTime();
-        // Start tracking from standard date to have a meaningful progress (e.g. 2025-12-01)
-        const startDate = new Date('2025-12-01T00:00:00').getTime();
+        // Start tracking from engagement date (Jan 30, 2026)
+        const startDate = new Date('2026-01-30T00:00:00').getTime();
         const today = new Date().getTime();
 
         // Calculate remaining days
