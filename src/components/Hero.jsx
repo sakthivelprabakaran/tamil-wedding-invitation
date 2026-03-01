@@ -4,6 +4,7 @@ import BananaTreeSVG from './SVGs/BananaTreeSVG';
 import ThoranamSVG from './SVGs/ThoranamSVG';
 import KolamCorners from './KolamCorners';
 import { publicUrl } from '../utils/publicUrl';
+import RemainingDays from './RemainingDays';
 import './Hero.css';
 
 /**
@@ -72,6 +73,8 @@ const Hero = () => {
 
         <p className="hero-date-label">Save the Date</p>
         <p className="hero-date">March 25, 2026</p>
+
+        <RemainingDays />
       </div>
       <div className="scroll-indicator">
         <span>&#8964;</span>
