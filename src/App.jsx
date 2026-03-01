@@ -9,7 +9,6 @@ import Hero from './components/Hero';
 import WeddingDetails from './components/WeddingDetails';
 import Story from './components/Story';
 import Gallery from './components/Gallery';
-import RSVP from './components/RSVP';
 import Footer from './components/Footer';
 import './App.css';
 
@@ -33,7 +32,7 @@ function App() {
 
       {/* Vertical garlands — fixed on both sides throughout the entire invitation */}
       <VerticalGarlandSVG side="left" opacity={0.10} width={48} />
-      <VerticalGarlandSVG side="right" opacity={0.10} width={48} />  
+      <VerticalGarlandSVG side="right" opacity={0.10} width={48} />
 
       {!entered && <EntryPage onEnter={handleEnter} onAudioEnabled={() => setAudioEnabled(true)} />}
 
@@ -46,8 +45,6 @@ function App() {
           <WeddingDetails />
           <div className="garland-divider"><GarlandDividerSVG /></div>
           <Gallery />
-          <div className="garland-divider"><GarlandDividerSVG /></div>
-          <RSVP />
           <Footer />
         </div>
       )}
