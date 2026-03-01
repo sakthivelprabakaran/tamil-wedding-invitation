@@ -82,7 +82,7 @@ const AudioModal = ({ onEnable }) => {
     return (
         <div className={`${styles.audioModal} glitter-bg`}>
             {/* GLITTER BACKGROUND */}
-            <FloatingHearts count={30} />
+            <FloatingHearts count={16} />
 
             {/* FULL-SCREEN KOLAM BACKGROUND */}
             <div className={styles.kolamBg}>
@@ -132,9 +132,7 @@ const AudioModal = ({ onEnable }) => {
                 <div className={styles.kuralDivider}></div>
                 <p className={styles.kuralMeaning}>"{kural.meaning}"</p>
             </div>
-
         </div>
     );
 };
-
 export default AudioModal;

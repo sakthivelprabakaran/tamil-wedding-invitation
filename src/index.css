@@ -197,6 +197,24 @@ ul {
   }
 }
 
+/* Internal Sparkle Animation */
+.inner-sparkle {
+  transform-origin: 16px 10px;
+  animation: innerTwinkle 2s ease-in-out infinite alternate;
+}
+
+@keyframes innerTwinkle {
+  0% {
+    opacity: 0.2;
+    transform: scale(0.6) rotate(0deg);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1.4) rotate(45deg);
+  }
+}
+
 
 /* === UTILITIES === */
 

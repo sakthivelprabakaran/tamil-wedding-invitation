@@ -37,9 +37,11 @@ const FloatingHearts = ({ count = 25 }) => {
                         '--delay': p.delay,
                     }}
                 >
-                    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" style={{ overflow: 'visible', filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))' }}>
+                    <svg className="heart-svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" style={{ overflow: 'visible', filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))' }}>
                         <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-                        <text x="12" y="14" textAnchor="middle" fontSize="6.5" fontWeight="bold" fill="currentColor" stroke="none" style={{ fontFamily: 'Playfair Display, serif' }}>SV</text>
+                        <text x="12" y="14.5" textAnchor="middle" fontSize="6.5" fontWeight="bold" fill="currentColor" stroke="none" style={{ fontFamily: 'Playfair Display, serif' }}>SV</text>
+                        {/* Tiny internal 4-point sparkle */}
+                        <path className="inner-sparkle" d="M16 8 L16.5 9.5 L18 10 L16.5 10.5 L16 12 L15.5 10.5 L14 10 L15.5 9.5 Z" fill="var(--yellow-bright)" stroke="none" />
                     </svg>
                 </div>
             ))}

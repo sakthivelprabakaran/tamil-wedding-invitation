@@ -28,7 +28,7 @@ const AnimatedText = ({ text, className }) => {
 const Hero = () => {
   return (
     <section className="hero glitter-bg">
-      <FloatingHearts count={20} />
+      <FloatingHearts count={12} />
 
       {/* Kolam corner decorations at all 4 corners */}
       <KolamCorners size={100} opacity={0.4} offset={16} />
@@ -76,7 +76,7 @@ const Hero = () => {
       <div className="scroll-indicator">
         <span>&#8964;</span>
       </div>
-    </section>
+    </section >
   );
 };
 

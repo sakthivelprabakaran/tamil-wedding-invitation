@@ -171,7 +171,7 @@ const EntryPage = ({ onEnter, onAudioEnabled }) => {
           }}
           onMouseEnter={() => !isMobile() && handleMouseEnter('groom')}
         >
-          <FloatingHearts count={25} />
+          <FloatingHearts count={12} />
           <div className={styles.content}>
             {/* Sikku Kolam watermark behind groom name */}
             <div className={styles.kolamWatermark}>
@@ -202,7 +202,7 @@ const EntryPage = ({ onEnter, onAudioEnabled }) => {
           }}
           onMouseEnter={() => !isMobile() && handleMouseEnter('bride')}
         >
-          <FloatingHearts count={25} />
+          <FloatingHearts count={12} />
           <div className={styles.content}>
             {/* Sikku Kolam watermark behind bride name */}
             <div className={styles.kolamWatermark}>
