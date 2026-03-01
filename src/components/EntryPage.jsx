@@ -60,12 +60,16 @@ const EntryPage = ({ onEnter, onAudioEnabled }) => {
   };
 
   const stopAllAudio = () => {
+    // Only stop the dynamic voiceovers, NEVER touch the background music
     if (currentAudio) {
       currentAudio.pause();
       currentAudio.currentTime = 0;
       setCurrentAudio(null);
     }
+
+    // Stop any text-to-speech fallbacks
     window.speechSynthesis.cancel();
+
     if (conversationTimeoutRef.current) {
       clearTimeout(conversationTimeoutRef.current);
       conversationTimeoutRef.current = null;

@@ -8,18 +8,21 @@ const BackgroundMusic = () => {
     const [visible, setVisible] = useState(false);
 
     useEffect(() => {
-        // We defer to audioManager to handle the strict mobile autoplay policy 
-        // to keep logic centralized, playing background music when the user interacts
-        // with the modal or screen.
+        // Since AudioModal unlocks the BGM immediately, we can make the button visible
+        // as soon as it mounts to allow the user to control the BGM on the first page.
 
         const checkAudioStatus = () => {
-            if (audioManager.bgm && !audioManager.bgm.paused) {
+            if (audioManager.bgm) {
                 setVisible(true);
-                setMuted(audioManager.bgm.volume === 0);
+                setMuted(audioManager.bgm.volume === 0 || audioManager.bgm.paused);
             }
         };
 
-        const interval = setInterval(checkAudioStatus, 1000);
+        // Check immediately
+        checkAudioStatus();
+
+        // Fast polling just to catch the state change when AudioModal enables it
+        const interval = setInterval(checkAudioStatus, 200);
 
         const handleVisibilityChange = () => {
             if (document.hidden && audioManager.bgm) {
