@@ -4,15 +4,14 @@ import styles from './Gallery.module.css';
 
 const Gallery = () => {
   const photos = [
-    { id: 1, src: publicUrl('/gallery/IMG_6899.JPG') },
-    { id: 2, src: publicUrl('/gallery/IMG_6902.JPG') },
-    { id: 3, src: publicUrl('/gallery/IMG_6902_2.JPG') },
-    { id: 4, src: publicUrl('/gallery/IMG_6915.JPG') },
-    { id: 5, src: publicUrl('/gallery/IMG_6935.JPG') },
-    { id: 6, src: publicUrl('/gallery/UGA_1348.JPEG') },
-    { id: 7, src: publicUrl('/gallery/UGA_1354.JPEG') },
-    { id: 8, src: publicUrl('/gallery/UGA_1363.JPEG') },
-    { id: 9, src: publicUrl('/gallery/d6851663-2c7f-4a0f-917d-d396bcf73a11.JPG') },
+    { id: 1, src: publicUrl('/gallery/Photo_01.jpg') },
+    { id: 2, src: publicUrl('/gallery/Photo_02.jpg') },
+    { id: 3, src: publicUrl('/gallery/Photo_03.JPG') },
+    { id: 4, src: publicUrl('/gallery/Photo_04.jpg') },
+    { id: 6, src: publicUrl('/gallery/Photo_06.JPG') },
+    { id: 7, src: publicUrl('/gallery/Photo_07.JPG') },
+    { id: 9, src: publicUrl('/gallery/Photo_09.JPG') },
+    { id: 10, src: publicUrl('/gallery/Photo_10.JPEG') },
   ];
 
   return (
