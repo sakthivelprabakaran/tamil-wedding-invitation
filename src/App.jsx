@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import EntryPage from './components/EntryPage';
 import MouseTrail from './components/MouseTrail';
 import BackgroundMusic from './components/BackgroundMusic';
@@ -16,6 +16,13 @@ function App() {
   const [entered, setEntered] = useState(false);
   const [side, setSide] = useState(null);
   const [audioEnabled, setAudioEnabled] = useState(false);
+
+  useEffect(() => {
+    // Proactively attach the global "click anywhere" unlocking listener
+    // as soon as the app loads, so the BackgroundMusic track can start
+    // automatically on the user's very first interaction cleanly.
+    audioManager.initBackgroundMusic();
+  }, []);
 
   const handleEnter = (selectedSide) => {
     setSide(selectedSide);

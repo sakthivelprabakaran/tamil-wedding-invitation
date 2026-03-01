@@ -39,10 +39,27 @@ class AudioManager {
 
     // Android/iOS unblocker mapping
     initBackgroundMusic() {
-        if (this.bgm && this.bgm.paused) {
-            // Because it was pre-instantiated in the constructor, this .play() is 
-            // instantaneous and respects the strict synchronous mobile autoplay policy.
-            this.bgm.play().catch(e => console.warn("BGM resume blocked:", e));
+        if (!this.bgm) return;
+
+        const startOnInteraction = () => {
+            if (this.bgm.paused) {
+                this.bgm.play().catch(e => console.warn("BGM resume blocked:", e));
+            }
+            // Cleanup listeners once triggered
+            document.removeEventListener('click', startOnInteraction);
+            document.removeEventListener('touchstart', startOnInteraction);
+            document.removeEventListener('keydown', startOnInteraction);
+        };
+
+        // If it's already paused, try attaching the interaction listeners 
+        // to cleanly unlock it on the user's very first interaction anywhere.
+        document.addEventListener('click', startOnInteraction, { once: true });
+        document.addEventListener('touchstart', startOnInteraction, { once: true });
+        document.addEventListener('keydown', startOnInteraction, { once: true });
+
+        // Try to play immediately if the browser permits it
+        if (this.bgm.paused) {
+            this.bgm.play().catch(() => { });
         }
     }
 
