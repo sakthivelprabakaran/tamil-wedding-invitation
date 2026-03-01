@@ -17,11 +17,6 @@ const EntryPage = ({ onEnter, onAudioEnabled }) => {
   const currentSideRef = useRef(null);
 
   const handleEnableAudio = () => {
-    const testAudio = new Audio();
-    testAudio.src = 'data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBTGH0fPTgjMGHm7A7+OZSA0QWrLq8KVTFQlDl93wv3EiBTKAzPLXgjIGHm+/7uiZRwwQWrzq8qVTFApBl9zwv3Ah';
-    testAudio.volume = 0.01;
-    testAudio.play().catch(() => { });
-    setTimeout(() => testAudio.pause(), 100);
 
     if (onAudioEnabled) onAudioEnabled();
     setAudioEnabled(true);
