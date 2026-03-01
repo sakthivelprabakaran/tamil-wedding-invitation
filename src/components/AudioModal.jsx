@@ -3,6 +3,7 @@ import styles from './AudioModal.module.css';
 import SikkuKolamSVG from './SVGs/SikkuKolamSVG';
 import KolamCorners from './KolamCorners';
 import Glitter from './Glitter';
+import { audioManager } from '../utils/audioManager';
 
 const kurals = [
     {
@@ -59,6 +60,12 @@ const AudioModal = ({ onEnable }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [visible, setVisible] = useState(true);
 
+    const handleEnableAudio = () => {
+        // Unlock Web Audio API context immediately on user interaction
+        audioManager.initBackgroundMusic();
+        onEnable();
+    };
+
     useEffect(() => {
         const interval = setInterval(() => {
             setVisible(false);
@@ -104,7 +111,7 @@ const AudioModal = ({ onEnable }) => {
                 </p>
                 <button
                     className={styles.enableButton}
-                    onClick={onEnable}
+                    onClick={handleEnableAudio}
                 >
                     Enable Audio &amp; Enter
                 </button>

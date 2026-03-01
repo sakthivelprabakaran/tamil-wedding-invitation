@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { publicUrl } from '../utils/publicUrl';
+import { audioManager } from '../utils/audioManager';
 import styles from './BackgroundMusic.module.css';
 
 const BackgroundMusic = () => {
@@ -8,59 +8,45 @@ const BackgroundMusic = () => {
     const [visible, setVisible] = useState(false);
 
     useEffect(() => {
-        const audio = new Audio(publicUrl('/audio/background_music.mp3'));
-        audio.loop = true;
-        audio.volume = 0.22;
-        audioRef.current = audio;
+        // We defer to audioManager to handle the strict mobile autoplay policy 
+        // to keep logic centralized, playing background music when the user interacts
+        // with the modal or screen.
 
-        // Try autoplay immediately
-        const tryPlay = () => {
-            audio.play()
-                .then(() => setVisible(true))
-                .catch(() => {
-                    // Browser blocked autoplay — wait for first user gesture
-                    const startOnInteraction = () => {
-                        audio.play()
-                            .then(() => setVisible(true))
-                            .catch(() => { });
-                        document.removeEventListener('click', startOnInteraction);
-                        document.removeEventListener('touchstart', startOnInteraction);
-                        document.removeEventListener('keydown', startOnInteraction);
-                    };
-                    document.addEventListener('click', startOnInteraction, { once: true });
-                    document.addEventListener('touchstart', startOnInteraction, { once: true });
-                    document.addEventListener('keydown', startOnInteraction, { once: true });
-                });
+        const checkAudioStatus = () => {
+            if (audioManager.bgm && !audioManager.bgm.paused) {
+                setVisible(true);
+                setMuted(audioManager.bgm.volume === 0);
+            }
         };
 
-        tryPlay();
+        const interval = setInterval(checkAudioStatus, 1000);
 
-        // Pause on tab switch, resume on focus
         const handleVisibilityChange = () => {
-            if (document.hidden) {
-                audio.pause();
-            } else if (!muted) {
-                audio.play().catch(() => { });
+            if (document.hidden && audioManager.bgm) {
+                audioManager.bgm.pause();
+            } else if (!document.hidden && audioManager.bgm && !muted) {
+                audioManager.bgm.play().catch(() => { });
             }
         };
         document.addEventListener('visibilitychange', handleVisibilityChange);
 
         return () => {
-            audio.pause();
-            audio.src = '';
+            clearInterval(interval);
             document.removeEventListener('visibilitychange', handleVisibilityChange);
         };
-    }, []);
+    }, [muted]);
 
     const toggle = () => {
-        const audio = audioRef.current;
+        const audio = audioManager.bgm;
         if (!audio) return;
-        if (muted) {
+
+        if (audio.volume === 0 || audio.paused) {
             audio.volume = 0.22;
             audio.play().catch(() => { });
             setMuted(false);
         } else {
             audio.volume = 0;
+            // Keep it playing but muted so we don't lose the interaction token on mobile
             setMuted(true);
         }
     };
