@@ -1,5 +1,5 @@
 import React from 'react';
-import Glitter from './Glitter';
+import FloatingHearts from './FloatingHearts';
 import BananaTreeSVG from './SVGs/BananaTreeSVG';
 import ThoranamSVG from './SVGs/ThoranamSVG';
 import KolamCorners from './KolamCorners';
@@ -28,7 +28,7 @@ const AnimatedText = ({ text, className }) => {
 const Hero = () => {
   return (
     <section className="hero glitter-bg">
-      <Glitter count={35} stars={0} />
+      <FloatingHearts count={20} />
 
       {/* Kolam corner decorations at all 4 corners */}
       <KolamCorners size={100} opacity={0.4} offset={16} />

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './AudioModal.module.css';
 import SikkuKolamSVG from './SVGs/SikkuKolamSVG';
 import KolamCorners from './KolamCorners';
-import Glitter from './Glitter';
+import FloatingHearts from './FloatingHearts';
 import { audioManager } from '../utils/audioManager';
 
 const kurals = [
@@ -82,7 +82,7 @@ const AudioModal = ({ onEnable }) => {
     return (
         <div className={`${styles.audioModal} glitter-bg`}>
             {/* GLITTER BACKGROUND */}
-            <Glitter count={55} />
+            <FloatingHearts count={30} />
 
             {/* FULL-SCREEN KOLAM BACKGROUND */}
             <div className={styles.kolamBg}>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import AudioModal from './AudioModal';
-import Glitter from './Glitter';
+import FloatingHearts from './FloatingHearts';
 import ThoranamSVG from './SVGs/ThoranamSVG';
 import SikkuKolamSVG from './SVGs/SikkuKolamSVG';
 import { publicUrl } from '../utils/publicUrl';
@@ -171,7 +171,7 @@ const EntryPage = ({ onEnter, onAudioEnabled }) => {
           }}
           onMouseEnter={() => !isMobile() && handleMouseEnter('groom')}
         >
-          <Glitter count={45} />
+          <FloatingHearts count={25} />
           <div className={styles.content}>
             {/* Sikku Kolam watermark behind groom name */}
             <div className={styles.kolamWatermark}>
@@ -202,7 +202,7 @@ const EntryPage = ({ onEnter, onAudioEnabled }) => {
           }}
           onMouseEnter={() => !isMobile() && handleMouseEnter('bride')}
         >
-          <Glitter count={45} />
+          <FloatingHearts count={25} />
           <div className={styles.content}>
             {/* Sikku Kolam watermark behind bride name */}
             <div className={styles.kolamWatermark}>

@@ -71,7 +71,8 @@ ul {
   overflow: hidden;
 }
 
-.glitter-bg .glitter-canvas {
+.glitter-bg .glitter-canvas,
+.glitter-bg .floating-heart-canvas {
   position: absolute;
   inset: 0;
   pointer-events: none;
@@ -137,6 +138,62 @@ ul {
   100% {
     opacity: 0;
     transform: translate(0, -130px) scale(0);
+  }
+}
+
+/* Individual floating heart */
+.heart-sparkle {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  color: var(--yellow-bright);
+  animation: heartFloat var(--duration, 6s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+  opacity: 0;
+}
+
+.heart-sparkle.rose {
+  color: var(--rose-gold);
+}
+
+.heart-sparkle.saffron {
+  color: var(--saffron);
+}
+
+.heart-sparkle.large {
+  width: 28px;
+  height: 28px;
+}
+
+.heart-sparkle.tiny {
+  width: 14px;
+  height: 14px;
+}
+
+@keyframes heartFloat {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.5) rotate(-10deg);
+  }
+
+  10% {
+    opacity: 1;
+    transform: translate(5px, -15px) scale(1) rotate(5deg);
+  }
+
+  50% {
+    opacity: 0.8;
+    transform: translate(-8px, -60px) scale(1.1) rotate(-5deg);
+  }
+
+  90% {
+    opacity: 0.3;
+    transform: translate(8px, -110px) scale(0.8) rotate(10deg);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(0, -130px) scale(0.5) rotate(0deg);
   }
 }
 
